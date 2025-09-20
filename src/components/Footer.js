@@ -14,7 +14,7 @@ export default function Footer() {
                     </div>
                     <div class="copyright">
                         &copy; 2025 Glossy Touch. All rights reserved. Crafted with modern web technologies. 
-                        Provided by <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                        Provided by 
                     </div>
                 </div>
             </footer>

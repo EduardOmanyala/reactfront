@@ -2,16 +2,17 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import BASE_URL from "../Config";
+
 
 export default function Dash() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const fetchUserData = async () => {

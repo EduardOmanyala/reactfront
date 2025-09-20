@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 
-import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
+import { Document, Packer, Paragraph, TextRun} from "docx";
 import { saveAs } from "file-saver";
 
 // Helper: Convert MathJax SVG into PNG (base64)
-function svgToPngBase64(svgElement) {
-  return new Promise((resolve) => {
-    const svgData = new XMLSerializer().serializeToString(svgElement);
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+// function svgToPngBase64(svgElement) {
+//   return new Promise((resolve) => {
+//     const svgData = new XMLSerializer().serializeToString(svgElement);
+//     const canvas = document.createElement("canvas");
+//     const ctx = canvas.getContext("2d");
 
-    const img = new Image();
-    img.onload = function () {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      resolve(canvas.toDataURL("image/png"));
-    };
-    img.src = "data:image/svg+xml;base64," + btoa(svgData);
-  });
-}
+//     const img = new Image();
+//     img.onload = function () {
+//       canvas.width = img.width;
+//       canvas.height = img.height;
+//       ctx.drawImage(img, 0, 0);
+//       resolve(canvas.toDataURL("image/png"));
+//     };
+//     img.src = "data:image/svg+xml;base64," + btoa(svgData);
+//   });
+// }
 
 export default function Questions() {
   const [questions, setQuestions] = useState([]);

@@ -8,36 +8,14 @@ const CourseSelection = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const fetchCourses = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const response = await fetch('http://127.0.0.1:8000/api/courses/', {
-  //       headers: {
-  //         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-  //         //'Authorization': `JWT ${localStorage.getItem('access_token')}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Failed to fetch courses');
-  //     }
-
-  //     const data = await response.json();
-  //     setCourses(data);
-  //   } catch (err) {
-  //     setError(err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
 
   const fetchCourses = async () => {
