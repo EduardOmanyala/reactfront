@@ -9,7 +9,7 @@ const SubjectSelection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const selectedCourse = location.state?.selectedCourse;
@@ -20,6 +20,7 @@ const SubjectSelection = () => {
       return;
     }
     fetchSubjects();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCourse, navigate]);
 
   // const fetchSubjects = async () => {

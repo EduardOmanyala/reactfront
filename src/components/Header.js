@@ -7,7 +7,7 @@ export default function Header() {
   const activePage = location.pathname;
   const { user, logout, isAuthenticated } = useAuth();
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout();

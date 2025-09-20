@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
   // Initialize auth state on app load
   useEffect(() => {
     initializeAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Set up automatic token refresh

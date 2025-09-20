@@ -1,17 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import BackgroundShapes from './components/BackgroundShapes';
 import Header from './components/Header';
 import Home from './components/Home';
-import About from './components/About';
-import Contact from './components/Contact';
+// import About from './components/About';
+// import Contact from './components/Contact';
 import Questions from './components/questions/Qlist';
 import QuestionsBank from './components/questions/Questions';
 import Random from './components/questions/Random';
-import Services from './components/Services';
+// import Services from './components/Services';
 import Footer from './components/Footer';
 import Quiz from './quiz/Quiz'
 import QuizComponent from './quiz/QuizTwo'
