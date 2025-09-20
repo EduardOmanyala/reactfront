@@ -12,7 +12,7 @@ const Detail = () => {
   const { id, slug } = useParams();
   const [book, setBook] = useState(null);
   const [allBooks, setAllBooks] = useState([]);
-  const [showCustomer, setShowCustomer] = useState(false);
+  // const [showCustomer, setShowCustomer] = useState(false);
 
   useEffect(() => {
     // Fetch single book
