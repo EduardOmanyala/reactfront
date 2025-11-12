@@ -24,6 +24,7 @@ import Dash from './dash/Dash'
 import Ebooks from './books/Ebooks';
 import Detail from './books/Detail';
 import Check from './books/Check';
+import Complete from './books/Complete';
 
 
 
@@ -77,6 +78,7 @@ function App() {
           {/* <Route path="/books/:slug" element={<Detail />} /> */}
           <Route path="/books/:id/:slug" element={<Detail />} />
            <Route path="/books/checkout/:id/" element={<Check />} />
+           <Route path="/books/purchase/complete/" element={<Complete />} />
       
         </Routes>
 

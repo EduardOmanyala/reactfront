@@ -34,7 +34,8 @@ const Random = () => {
       if (searchFilters.count) params.append('count', searchFilters.count);
       if (searchFilters.paper_type) params.append('paper_type', searchFilters.paper_type);
 
-      const response = await fetch(`http://127.0.0.1:8000/questions/random/?${params.toString()}`);
+      //const response = await fetch(`http://127.0.0.1:8000/questions/random/?${params.toString()}`);
+      const response = await fetch(`https://api.ken-lib.com/questions/random/?${params.toString()}`);
       
       if (!response.ok) {
         const errorData = await response.json();

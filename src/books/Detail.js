@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./books.css";
 
-const BASE_URL = "http://127.0.0.1:8000"; // change to your backend URL
+const BASE_URL = "https://api.ken-lib.com"; // change to your backend URL
 const FALLBACK_COVER =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png";
 
 const Detail = () => {
   const { id, slug } = useParams();
   const [book, setBook] = useState(null);
-  const [allBooks, setAllBooks] = useState([]);
+  // const [allBooks, setAllBooks] = useState([]);
   // const [showCustomer, setShowCustomer] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Detail = () => {
     // Fetch all for related section
     fetch(`${BASE_URL}/books/`)
       .then((res) => res.json())
-      .then((data) => setAllBooks(data))
+      // .then((data) => setAllBooks(data))
       .catch((err) => console.error("Error fetching books:", err));
   }, [id, slug]);
 
@@ -32,9 +32,9 @@ const Detail = () => {
     return <div>Loading book...</div>;
   }
 
-  const relatedBooks = allBooks
-    .filter((b) => b.id !== book.id)
-    .slice(0, 3);
+  // const relatedBooks = allBooks
+  //   .filter((b) => b.id !== book.id)
+  //   .slice(0, 3);
 
   return (
     <div className="detail-container">
@@ -51,17 +51,20 @@ const Detail = () => {
           <br/>
           <p className="t-color"><strong>Author:</strong> {book.author}</p>
           <br/>
-          <p className="t-color">{book.summary}</p>
+         
+          <div className="t-color" dangerouslySetInnerHTML={{ __html: book.info }}/>
         </div>
         <div className="book-purchase">
-          <p className="price">$14.99</p> {/* Add real price field if you have it */}
+          <p className="price">KES {book.price}</p> {/* Add real price field if you have it */}
+          <Link to={`/books/checkout/${book.id}/`}>
           <button className="buy-now">
-            Buy Now
+          Buy Now
           </button>
+          </Link>
         </div>
       </div>
-
-      <div className="related-books">
+   
+      {/* <div className="related-books">
         <h2 className="t-color">Related Books</h2>
         <div className="books-grid">
           {relatedBooks.map((relBook) => (
@@ -82,7 +85,7 @@ const Detail = () => {
             </Link>
           ))}
         </div>
-      </div>
+      </div> */}
 
       
     </div>
