@@ -30,18 +30,18 @@ const Check = () => {
 
       // Trigger Flutterwave payment
       window.FlutterwaveCheckout({
-        public_key: "FLWPUBK-815", // replace with your real public key
+        public_key: "FLWPUBK_TEST-20f3552e74d88c0ce534a8a29c3710e3-X", // replace with your real public key
         //tx_ref: "book-" + Date.now(), // unique transaction ref
         tx_ref: `book-${id}-${uuidv4()}`,
-        amount: 100, // Replace with your dynamic amount
+        amount: 150, // Replace with your dynamic amount
         currency: "KES",
-        redirect_url: "http://localhost:3000/payment-success", // adjust to your backend route
+        redirect_url: "http://localhost:3000/books/purchase/complete/", // adjust to your backend route
         meta: {
           book_id: id,
         },
         customer: {
           email: email,
-          phone_number: "254717895728", // optional
+          phone_number: "", // optional
         },
         customizations: {
           title: "Testprep Kenya",
@@ -92,6 +92,7 @@ const Check = () => {
         </form>
       </div>
     </div>
+    
   );
 };
 

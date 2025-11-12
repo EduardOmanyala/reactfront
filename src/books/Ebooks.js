@@ -21,7 +21,7 @@ const Ebooks = () => {
           id: book.id,
           title: book.title,
           cover: book.pdf_file ? `${BASE_URL}${book.pdf_file}` : 'https://via.placeholder.com/300x400?text=No+Cover', // Placeholder if no cover
-          price: '$9.99', // Default price, can be added to model later
+          price: book.price, // Default price, can be added to model later
           slug: book.slug,
           author: book.author
         }));
@@ -73,7 +73,7 @@ const Ebooks = () => {
   if (loading) {
     return (
       <div className="ebooks-container">
-        <h1>Ebooks</h1>
+        <h1 className="ebooks-header1">Ebooks</h1>
         <p>Loading books...</p>
       </div>
     );
@@ -82,7 +82,7 @@ const Ebooks = () => {
   if (error) {
     return (
       <div className="ebooks-container">
-        <h1>Ebooks</h1>
+        <h1 className="ebooks-header1">Ebooks</h1>
         <p>Error: {error}</p>
       </div>
     );
@@ -90,14 +90,14 @@ const Ebooks = () => {
 
   return (
     <div className="ebooks-container">
-      <h1>Ebooks</h1>
+      <h1 className="ebooks-header1">Ebooks</h1>
       <div className="books-grid">
         {books.map(book => (
           <Link key={book.id} to={`/books/${book.id}/${book.slug}`} className="book-card-link">
             <div className="book-card">
               <img src={book.cover} alt={book.title} className="book-cover" />
               <h3 className="book-title">{book.title}</h3>
-              <p className="book-price">{book.price}</p>
+              <p className="book-price">KES {book.price}</p>
             </div>
           </Link>
         ))}

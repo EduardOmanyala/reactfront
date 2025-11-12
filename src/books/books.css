@@ -44,6 +44,25 @@
 .t-color {
   color: white;
 }
+
+.t-color ul {
+  list-style-type: disc;
+  margin-left: 1.2rem; /* indent the bullets */
+  padding-left: 1.2rem;
+}
+
+.t-color ol {
+  list-style-type: decimal;
+  margin-left: 1.2rem;
+  padding-left: 1.2rem;
+}
+
+.t-color li {
+  margin-bottom: 0.5rem;
+}
+
+
+
 .book-price {
   font-size: 16px;
   color: #007bff;
@@ -69,6 +88,11 @@
   height: auto;
 }
 
+.ebooks-header1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 1%;
+}
 .book-info h1 {
   margin-top: 0;
 }
@@ -146,6 +170,7 @@
   justify-content: center;
   /*background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
   padding: 20px;
+  margin-bottom: 30px;
 }
 
 .customer-card {
