@@ -54,7 +54,7 @@ export default function Header() {
                 style={{ textDecoration: "none", color: "inherit" }}
                 className="font-bold"
               >
-                Glossy Touch
+                Kenlib
               </Link>
             </div>
 
