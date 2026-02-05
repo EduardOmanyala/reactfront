@@ -35,7 +35,7 @@ const Check = () => {
         tx_ref: `book-${id}-${uuidv4()}`,
         amount: 150, // Replace with your dynamic amount
         currency: "KES",
-        redirect_url: "http://localhost:3000/books/purchase/complete/", // adjust to your backend route
+        redirect_url: `http://localhost:3000/books/purchase/complete/${id}/`, // adjust to your backend route
         meta: {
           book_id: id,
         },

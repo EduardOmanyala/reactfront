@@ -78,7 +78,7 @@ function App() {
           {/* <Route path="/books/:slug" element={<Detail />} /> */}
           <Route path="/books/:id/:slug" element={<Detail />} />
            <Route path="/books/checkout/:id/" element={<Check />} />
-           <Route path="/books/purchase/complete/" element={<Complete />} />
+           <Route path="/books/purchase/complete/:id/" element={<Complete />} />
       
         </Routes>
 
