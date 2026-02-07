@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import BASE_URL from '../Config';
 import './books.css';
 
 const Check = () => {
   const { id } = useParams(); // Get book id from the URL
+  const [book, setBook] = useState(null);
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/books/${id}/`)
+      .then((res) => res.json())
+      .then((data) => setBook(data))
+      .catch((err) => console.error('Error fetching book:', err));
+  }, [id]);
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -30,12 +39,12 @@ const Check = () => {
 
       // Trigger Flutterwave payment
       window.FlutterwaveCheckout({
-        public_key: "FLWPUBK_TEST-20f3552e74d88c0ce534a8a29c3710e3-X", // replace with your real public key
+        public_key: "2182b2122e94eb6464234d1a3c85375b", // replace with your real public key
         //tx_ref: "book-" + Date.now(), // unique transaction ref
         tx_ref: `book-${id}-${uuidv4()}`,
-        amount: 150, // Replace with your dynamic amount
+        amount: book?.price ?? 0,
         currency: "KES",
-        redirect_url: `http://localhost:3000/books/purchase/complete/${id}/`, // adjust to your backend route
+        redirect_url: `https://api.ken-lib.com/books/purchase/complete/${id}/`, // adjust to your backend route
         meta: {
           book_id: id,
         },
@@ -57,6 +66,10 @@ const Check = () => {
     }
   };
 
+  if (!book) {
+    return <div>Loading book...</div>;
+  }
+
   return (
     <div className="customer-container">
       <div className="customer-card">
@@ -64,6 +77,7 @@ const Check = () => {
           <h2>Complete Your Purchase</h2>
           <br/>
           <p>Enter email where your book should be sent.</p>
+          <p className="price">KES {book.price}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="customer-form">
