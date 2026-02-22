@@ -21,10 +21,12 @@ import CourseSelection from './components/CourseSelection';
 import SubjectSelection from './components/SubjectSelection';
 
 import Dash from './dash/Dash'
-import Ebooks from './books/Ebooks';
+import Ebooks from './books/Ebooks'; 
+import MMFCalculator2 from './mmf/MMFCalculator2';
 import Detail from './books/Detail';
 import Check from './books/Check';
 import Complete from './books/Complete';
+import LandPrices from './books/LandPrices';
 
 
 
@@ -79,6 +81,8 @@ function App() {
           <Route path="/books/:id/:slug" element={<Detail />} />
            <Route path="/books/checkout/:id/" element={<Check />} />
            <Route path="/books/purchase/complete/:id/" element={<Complete />} />
+          <Route path="/land-prices-by-county-in-kenya" element={<LandPrices />} />
+          <Route path="/finance/mmf/kenya" element={<MMFCalculator2 />} />
       
         </Routes>
 

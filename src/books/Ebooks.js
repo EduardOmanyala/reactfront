@@ -73,7 +73,7 @@ const Ebooks = () => {
   if (loading) {
     return (
       <div className="ebooks-container">
-        <h1 className="ebooks-header1">Ebooks</h1>
+        <h1 className="ebooks-header1">Catalogue</h1>
         <p>Loading books...</p>
       </div>
     );
@@ -82,7 +82,7 @@ const Ebooks = () => {
   if (error) {
     return (
       <div className="ebooks-container">
-        <h1 className="ebooks-header1">Ebooks</h1>
+        <h1 className="ebooks-header1">Catalogue</h1>
         <p>Error: {error}</p>
       </div>
     );
@@ -90,7 +90,7 @@ const Ebooks = () => {
 
   return (
     <div className="ebooks-container">
-      <h1 className="ebooks-header1">Ebooks</h1>
+      <h1 className="ebooks-header1">Catalogue</h1>
       <div className="books-grid">
         {books.map(book => (
           <Link key={book.id} to={`/books/${book.id}/${book.slug}`} className="book-card-link">
