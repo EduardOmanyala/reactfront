@@ -77,7 +77,7 @@ export default function Header() {
                   </Link>
                   
                   <Link
-                    to="/random-questions"
+                    to="/finance/mmf/kenya"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
                     MMF
@@ -117,7 +117,7 @@ export default function Header() {
                     Books
                   </Link>
                   <Link
-                    to="/kcse"
+                    to="/finance/mmf/kenya"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
                     MMF
@@ -175,7 +175,7 @@ export default function Header() {
             </Link>
             
             <Link
-              to="/random-questions"
+              to="/finance/mmf/kenya"
               className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
