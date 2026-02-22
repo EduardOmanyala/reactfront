@@ -45,7 +45,7 @@ const Check = () => {
         tx_ref: `book-${id}-${uuidv4()}`,
         amount: book?.price ?? 0,
         currency: "KES",
-        redirect_url: `https://api.ken-lib.com/books/purchase/complete/${id}/`, // adjust to your backend route
+        redirect_url: `https://ken-lib.com/books/purchase/complete/${id}/`, // adjust to your backend route
         meta: {
           book_id: id,
         },
