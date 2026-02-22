@@ -39,7 +39,8 @@ const Check = () => {
 
       // Trigger Flutterwave payment
       window.FlutterwaveCheckout({
-        public_key: "2182b2122e94eb6464234d1a3c85375b", // replace with your real public key
+        //public_key: "2182b2122e94eb6464234d1a3c85375b", // replace with your real public key
+        public_key: "FLWPUBK-b36c7e6de3c449c08baf5c9e597ae288-X", // replace with your real public key
         //tx_ref: "book-" + Date.now(), // unique transaction ref
         tx_ref: `book-${id}-${uuidv4()}`,
         amount: book?.price ?? 0,

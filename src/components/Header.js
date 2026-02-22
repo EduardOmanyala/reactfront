@@ -78,9 +78,9 @@ export default function Header() {
                   
                   <Link
                     to="/random-questions"
-                    className={activePage === "/kcse" ? "active" : ""}
+                    className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
-                    KCSE
+                    MMF
                   </Link>
                                 
                   <Link
@@ -118,15 +118,15 @@ export default function Header() {
                   </Link>
                   <Link
                     to="/kcse"
-                    className={activePage === "/kcse" ? "active" : ""}
+                    className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
-                    KCSE
+                    MMF
                   </Link>
                   <Link
                     to="#"
                     className={activePage === "#" ? "active" : ""}
                   >
-                    CPA
+                    Study
                   </Link>
                 </div>
               )}
@@ -176,10 +176,10 @@ export default function Header() {
             
             <Link
               to="/random-questions"
-              className={activePage === "/kcse" ? "active" : ""}
+              className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              KCSE
+              MMF
             </Link>
                           
             <Link
