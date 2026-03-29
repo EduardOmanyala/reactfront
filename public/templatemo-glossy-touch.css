@@ -318,6 +318,23 @@ button[type="submit"] {
     gap: 30px;
     margin-bottom: 40px;
 }
+
+.features1 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+    .features1 {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
+     
+    }
+}
+
+
+
 .feature-card {
     padding: 40px 30px;
     text-align: center;

@@ -33,12 +33,26 @@
   align-items: start;
 }
 
+.questions-grid-cpa {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  /* ensures the left/right cards can size the scrollable area */
+}
+
 /* Filter Section */
 .filter-section {
   position: sticky;
   top: 20px;
 }
 
+
+
+
+
+
+
+/* Replace/update these existing rules */
 .filter-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -46,20 +60,112 @@
   border-radius: 15px;
   padding: 25px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1%;
 }
 
 .filter-card h3 {
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
   color: #333;
   font-size: 1.3rem;
   font-weight: 600;
 }
 
+/* NEW: horizontal row container */
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
 .form-group {
-  margin-bottom: 20px;
+  flex: 1 1 160px;   /* grows/shrinks, minimum 160px before wrapping */
+  margin-bottom: 0;  /* removed — gap handles spacing now */
 }
 
 .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+/* Form actions sit inline on large screens */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-shrink: 0;      /* don't shrink the buttons */
+  margin-top: 0;       /* removed — gap handles it */
+}
+
+/* Stack everything vertically on small screens */
+@media (max-width: 640px) {
+  .filter-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-group {
+    flex: 1 1 100%;
+  }
+
+  .form-actions {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+.filter-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+} */
+/* 
+.filter-card h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+} */
+/* 
+.form-group {
+  margin-bottom: 20px;
+} */
+
+/* .form-group label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
@@ -76,7 +182,7 @@
   background: white;
   color: #333;
   transition: all 0.3s ease;
-}
+} */
 
 .form-group select:focus {
   outline: none;
@@ -84,11 +190,11 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.form-actions {
+/* .form-actions {
   display: flex;
   gap: 10px;
   margin-top: 25px;
-}
+} */
 
 .btn-primary, .btn-secondary {
   flex: 1;
@@ -128,9 +234,30 @@
   border-color: #adb5bd;
 }
 
+.my-button {
+  background-color: '#4CAF50';
+  color: 'white';
+  border: 'none';
+  padding: '6px 12px';
+  border-radius: '20px';
+  cursor: 'pointer';
+}
+
+
 /* Questions Section */
 .questions-section {
   min-height: 500px;
+}
+
+.question-section-cpa {
+  flex: 1;
+  min-width: 0; /* allow children to shrink so overflow works */
+}
+
+.answer-section-cpa {
+  flex: 1;
+  min-width: 0; /* allow children to shrink so overflow works */
+  min-height: 800px;
 }
 
 .questions-card {
@@ -140,7 +267,16 @@
   border-radius: 15px;
   padding: 25px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  min-height: 500px;
+  min-height: 800px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* CPA layout: constrain card height so the questions-list can scroll independently */
+.questions-grid-cpa .questions-card {
+  min-height: 0; /* critical for flex children overflow */
+  max-height: calc(100vh - 20px);
 }
 
 .questions-header-inner {
@@ -210,6 +346,10 @@
 
 /* Questions List */
 .questions-list {
+  
+  flex: 1;              /* 👈 takes remaining space */
+  overflow-y: auto;     /* 👈 enables independent scroll */
+  min-height: 0;        /* critical for flex overflow */
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -237,6 +377,15 @@
   padding-bottom: 10px;
   border-bottom: 1px solid #f0f0f0;
 }
+
+/* .hideshowq {
+    background-color: '#4CAF50';
+    color: 'white';
+    border: 'none';
+    padding: '5px 10px';
+    border-radius: '4px';
+    cursor: 'pointer';
+  } */
 
 .question-number {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -295,6 +444,11 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
+  /* CPA layout becomes vertical on smaller screens */
+  .questions-grid-cpa {
+    flex-direction: column;
+  }
   
   .filter-section {
     position: static;
@@ -304,6 +458,19 @@
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'space-between'; 
+    gap: '10px';
+  }
+
+  .hideshowq1 {
+    background-color: '#4CAF50';
+    color: 'white';
+    border: 'none';
+    padding: '5px 10px';
+    border-radius: '4px';
+    cursor: 'pointer';
   }
   
   .form-actions {
@@ -334,4 +501,6 @@
     padding: 15px;
   }
 }
+
+
 

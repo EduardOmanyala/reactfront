@@ -3,6 +3,7 @@ import MMFRateChart from "./MMFRateChart";
 import { Link } from "react-router-dom";
 import "./calculator.css";
 
+
 const MMF_PROVIDERS = {
   NDVU: { name: "Ndovu Wealth Limited", rate: 11.1 },
   ARVC: { name: "ArvoCap Asset Managers Limited", rate: 11.68 },
@@ -261,20 +262,28 @@ return (
     </div>
 
      {/* Ad section */}
-     <div className="calculator-grid2">
-      <div>
-        <Link to="#">
-          <img src="/images/mmf.jpg" alt="link" />
-        </Link>
-        <Link to="/guide">
-        <button className="calculator-button2">
-          Get Guide
-        </button>
-      </Link>
-      </div>
-      <div></div>
+     <div className="mainbanner">
+      <div
+        className="imagebanner"
+        style={{ backgroundImage: "url(/images/invest.jpg)" }}
+      ></div>
 
-     </div>
+      <div className="contentbanner">
+        <div className="textwrapbanner">
+          <h2 className="titlebanner">GET IN TOUCH</h2>
+
+          <p className="descriptionbanner">
+            The Bannermen pride themselves on their expertise in HTML5—among
+            other ad technologies! Why not let them wow you with their knowledge
+            in your next digital campaign?!
+          </p>
+
+          <a href="#" className="linkbanner">
+            contact us <span className="arrowbanner">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
 
 
 

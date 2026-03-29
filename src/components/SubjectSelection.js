@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 // import { useAuth } from '../context/AuthContext';
 import './SubjectSelection.css';
+import BASE_URL from '../Config';
 
 const SubjectSelection = () => {
   const [subjects, setSubjects] = useState([]);
@@ -26,7 +27,7 @@ const SubjectSelection = () => {
   // const fetchSubjects = async () => {
   //   try {
   //     setLoading(true);
-  //     const response = await fetch(`http://127.0.0.1:8000/api/courses/${selectedCourse.id}/subjects/`, {
+  //     const response = await fetch(`${BASE_URL}/api/courses/${selectedCourse.id}/subjects/`, {
   //       headers: {
   //         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
   //         'Content-Type': 'application/json',
@@ -52,7 +53,7 @@ const SubjectSelection = () => {
   
       // Define the request
       const doRequest = async () => {
-        return await fetch(`http://127.0.0.1:8000/api/courses/${selectedCourse.id}/subjects/`, {
+        return await fetch(`${BASE_URL}/api/courses/${selectedCourse.id}/subjects/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ const SubjectSelection = () => {
   
       // If access token is expired, try refreshing
       if (response.status === 401) {
-        const refreshResponse = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+        const refreshResponse = await fetch(`${BASE_URL}/api/token/refresh/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ refresh: localStorage.getItem('refresh_token') }),
@@ -122,7 +123,7 @@ const SubjectSelection = () => {
   //       subject: subject.id
   //     }));
 
-  //     const response = await fetch('http://127.0.0.1:8000/api/my-subjects/', {
+  //     const response = await fetch(`${BASE_URL}/api/my-subjects/`, {
   //       method: 'POST',
   //       headers: {
   //         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -160,7 +161,7 @@ const SubjectSelection = () => {
   
       // Define request
       const doRequest = async () => {
-        return await fetch('http://127.0.0.1:8000/api/my-subjects/', {
+        return await fetch(`${BASE_URL}/api/my-subjects/`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -174,7 +175,7 @@ const SubjectSelection = () => {
   
       // Handle expired access token
       if (response.status === 401) {
-        const refreshResponse = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+        const refreshResponse = await fetch(`${BASE_URL}/api/token/refresh/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ refresh: localStorage.getItem('refresh_token') }),

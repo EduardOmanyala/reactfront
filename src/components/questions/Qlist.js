@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BASE_URL from "../../Config";
 
 import { Document, Packer, Paragraph, TextRun} from "docx";
 import { saveAs } from "file-saver";
@@ -27,7 +28,7 @@ export default function Questions() {
 
   // Fetch questions from Django
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/questions/")
+    fetch(`${BASE_URL}/questions/`)
       .then((res) => res.json())
       .then((data) => {
         setQuestions(data);

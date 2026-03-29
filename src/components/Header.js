@@ -123,7 +123,7 @@ export default function Header() {
                     MMF
                   </Link>
                   <Link
-                    to="#"
+                    to="/study"
                     className={activePage === "#" ? "active" : ""}
                   >
                     Study
@@ -226,10 +226,10 @@ export default function Header() {
               className={activePage === "/kcse" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              KCSE
+              Study
             </Link>
             <Link
-              to="#"
+              to="/study"
               className={activePage === "#" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >

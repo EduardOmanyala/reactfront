@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import BASE_URL from "../Config";
 import "./books.css";
-
-const BASE_URL = "https://api.ken-lib.com"; // change to your backend URL
 const FALLBACK_COVER =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png";
 

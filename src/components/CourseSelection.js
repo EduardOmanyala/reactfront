@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { useAuth } from '../context/AuthContext';
 import './CourseSelection.css';
+import BASE_URL from '../Config';
 
 const CourseSelection = () => {
   const [courses, setCourses] = useState([]);
@@ -23,7 +24,7 @@ const CourseSelection = () => {
       setLoading(true);
   
       const doRequest = async () => {
-        return await fetch('http://127.0.0.1:8000/api/courses/', {
+        return await fetch(`${BASE_URL}/api/courses/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const CourseSelection = () => {
       if (response.status === 401) {
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
-          const refreshResponse = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+          const refreshResponse = await fetch(`${BASE_URL}/api/token/refresh/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refresh: refreshToken }),
@@ -85,7 +86,7 @@ const CourseSelection = () => {
   //   }
 
   //   try {
-  //     const response = await fetch('http://127.0.0.1:8000/api/my-courses/', {
+  //     const response = await fetch(`${BASE_URL}/api/my-courses/`, {
   //       method: 'POST',
   //       headers: {
   //         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -121,7 +122,7 @@ const CourseSelection = () => {
   
     try {
       const doRequest = async () => {
-        return await fetch('http://127.0.0.1:8000/api/my-courses/', {
+        return await fetch(`${BASE_URL}/api/my-courses/`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -139,7 +140,7 @@ const CourseSelection = () => {
       if (response.status === 401) {
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
-          const refreshResponse = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+          const refreshResponse = await fetch(`${BASE_URL}/api/token/refresh/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refresh: refreshToken }),

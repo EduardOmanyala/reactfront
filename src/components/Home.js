@@ -46,36 +46,36 @@ export default function Home() {
                         <p>Download past papers with marking schemes on all examinable subjects. Take auto marked quizzes to boost your revision.</p>
                     </div>
                     </Link>
-                    
+                     <Link to="/cpa/home" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
                         <div className="feature-icon">⚡</div>
-                        <h3>CPA/CPS</h3>
+                        <h3>CPA</h3>
                         <p>Level up your revision by getting the latest revision kits and questions. Quiz yourself to gauge your readiness.</p>
                     </div>
-                    
+                    </Link>
+                    <Link to="/books" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
                         <div className="feature-icon">📱</div>
                         <h3>Books</h3>
-                        <p>Upskill or reskill with expert authored books on areas of practice you may be interested in.</p>
+                        <p>Upskill or reskill with expert authored books on a wide range of topics & areas of practice you may be interested in.</p>
                     </div>
-
+                    </Link>
+                    <Link to="/finance/mmf/kenya" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
                         <div className="feature-icon">🎨</div>
-                        <h3>KASNEB</h3>
-                        <p>The latest news. Exam deadlines. Results. Syllabus changes and course materials needed to jumpstart your revision.</p>
+                        <h3>MMF</h3>
+                        <p>The latest news. Rate changes. Estimate retruns and compare different providers to find what best for you.</p>
                     </div>
-
+                    </Link>
+                   <Link to="/land-prices-by-county-in-kenya" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
                         <div className="feature-icon">🔒</div>
-                        <h3>KNEC</h3>
-                        <p>The latest news. Exam deadlines. Results. Syllabus changes and course materials needed to jumpstart your revision.</p>
+                        <h3>Land</h3>
+                        <p>All you need to know about land prices in kenya, purchase processes and other important information.</p>
                     </div>
+                    </Link>
 
-                    <div className="feature-card glass">
-                        <div className="feature-icon">🚀</div>
-                        <h3>FA</h3>
-                        <p>Everything you need to pass Financial Accounting. Past papers, notes, revision kits and expert guidance if needed.</p>
-                    </div>
+                    
                 </section>
             </div>
         </div>

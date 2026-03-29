@@ -59,3 +59,117 @@
   width: 100%;
   height: 100%;
 }
+
+.mainbanner{
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Left image */
+.imagebanner{
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+}
+
+/* Red angled section */
+.contentbanner{
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Triangle overlay */
+.contentbanner::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e31e24;
+  clip-path: polygon(40% 0,100% 0,100% 100%,25% 100%);
+  z-index: -1;
+}
+
+/* Text container */
+.textwrapbanner{
+  width: 42%;
+  min-width: 280px;
+  padding: 40px 60px 40px 40px;
+  color: white;
+}
+
+/* Title */
+.titlebanner{
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  letter-spacing: .5px;
+}
+
+/* Description */
+.descriptionbanner{
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  opacity: 0.95;
+}
+
+/* Link */
+.linkbanner{
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid white;
+  padding-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Arrow */
+.arrowbanner{
+  font-size: 20px;
+  transition: transform .2s ease;
+}
+
+.linkbanner:hover .arrowbanner{
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width:900px){
+  .textwrapbanner{
+    width: 60%;
+    padding: 30px;
+  }
+
+  .contentbanner::before{
+    clip-path: polygon(20% 0,100% 0,100% 100%,0% 100%);
+  }
+}
+
+@media (max-width:600px){
+  .mainbanner{
+    height: auto;
+  }
+
+  .contentbanner{
+    position: relative;
+    padding: 40px 0;
+  }
+
+  .contentbanner::before{
+    clip-path: none;
+  }
+
+  .textwrapbanner{
+    width: 100%;
+    background:#e31e24;
+  }
+}

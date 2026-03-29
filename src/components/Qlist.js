@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../quiz/QuizComponent.css";
 import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
 import { saveAs } from "file-saver";
+import BASE_URL from "../Config";
 
 // Helper: Convert MathJax SVG into PNG (base64)
 function svgToPngBase64(svgElement) {
@@ -27,7 +28,7 @@ export default function Questions() {
 
   // Fetch questions from Django
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/questions/")
+    fetch(`${BASE_URL}/questions/`)
       .then((res) => res.json())
       .then((data) => {
         setQuestions(data);

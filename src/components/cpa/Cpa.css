@@ -1,0 +1,56 @@
+.menudiv676 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+/* Each field block */
+.menuitem676 {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.menulabel676 {
+  margin-bottom: 5px;
+}
+
+/* Inputs */
+.menuselect676 {
+  padding: 8px;
+}
+
+/* Button container */
+.menubtncontainer676 {
+  display: flex;
+  gap: 10px;
+}
+
+/* Buttons */
+.searchbtn676 {
+  padding: 10px 15px;
+}
+
+.resetbtn676 {
+  padding: 10px 15px;
+}
+
+/* ✅ Mobile: stack vertically */
+@media (max-width: 768px) {
+  .menudiv676 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .menubtncontainer676 {
+    flex-direction: column;
+  }
+}
+
+
+.units-heading {
+  text-align: center;
+  color: white;
+  margin-bottom: 2%;
+}

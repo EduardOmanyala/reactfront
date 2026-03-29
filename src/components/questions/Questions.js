@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Questions.css';
+import BASE_URL from '../../Config';
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -35,8 +36,8 @@ const Questions = () => {
       if (searchFilters.paper_type) params.append('paper_type', searchFilters.paper_type);
       params.append('type', 'kcse'); // Default type
 
-      //const response = await fetch(`http://127.0.0.1:8000/questions/get/?${params.toString()}`);
-      const response = await fetch(`https://api.ken-lib.com/questions/get/?${params.toString()}`);
+      // const response = await fetch(`${BASE_URL}/questions/get/?${params.toString()}`);
+      const response = await fetch(`${BASE_URL}/questions/get/?${params.toString()}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch questions');
