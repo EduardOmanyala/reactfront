@@ -6,7 +6,7 @@ import BackgroundShapes from './components/BackgroundShapes';
 import Header from './components/Header';
 import Home from './components/Home';
 // import About from './components/About';
-// import Contact from './components/Contact';
+import Contact from './components/Contact';
 import Questions from './components/questions/Qlist';
 import QuestionsBank from './components/cpa/CpaTest';
 import Random from './components/questions/Random';
@@ -69,7 +69,9 @@ function App() {
           <Route path="/level/:level" element={<LevelUnits />} />
           <Route path="/level/:level/:unitSlug" element={<UnitDetail />} />
           <Route path="/study" element={<Study />} />
-         
+
+
+           <Route path="/contact" element={<Contact />} />      
       
           
       

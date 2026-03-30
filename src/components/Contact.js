@@ -1,31 +1,129 @@
-// src/components/Home.js
-export default function Contact() {
+// src/components/Contact.js
+import React, { useState } from "react";
+import BASE_URL from '../Config';
+import "./gen.css"; // 👈 import CSS
+
+const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("");
+  const [isError, setIsError] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${BASE_URL}/api/contact/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus(data.message || "Message sent successfully!");
+        // setStatus("Message sent successfully!");
+        setIsError(false);
+
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        setStatus("Something went wrong. Please try again.");
+        setIsError(true);
+      }
+    } catch (error) {
+      setStatus("Network error. Please check your connection.");
+      setIsError(true);
+    }
+  };
+
   return (
-        <div id="contact" >
+
+
+    <div id="contact" >
         <div className="container">
             <div className="content-wrapper">
                 <section className="contact-grid">
                     <div className="contact-form glass">
                         <h2>Get In Touch</h2>
-                        <form>
-                            <div className="form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" id="name" name="name" placeholder="Enter your full name" required/>
-                            </div>
-                            <div className="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" placeholder="Enter your email" required/>
-                            </div>
-                            <div className="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" placeholder="What's this about?"/>
-                            </div>
-                            <div className="form-group">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
-                            </div>
-                            <button type="submit" className="cta-button">Send Message</button>
-                        </form>
+                        
+                    {/* ✅ ALERT ABOVE FORM */}
+              {status && (
+                <div className={`alert ${isError ? "alert-danger" : "alert-success"}`}>
+                  {status}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label>Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Subject</label>
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder="What's this about?"
+                    value={formData.subject}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Message</label>
+                  <textarea
+                    name="message"
+                    placeholder="Tell us about your project..."
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <button type="submit" className="cta-button mt-1">
+                  Send Message
+                </button>
+              </form>
                     </div>
 
                     <div className="contact-info glass">
@@ -35,23 +133,16 @@ export default function Contact() {
                             <div className="contact-item-icon">📧</div>
                             <div className="contact-item-text">
                                 <h4>Email</h4>
-                                <p>hello@glossytouch.com</p>
+                                <p>support@ken-lib.com</p>
                             </div>
                         </div>
 
-                        <div className="contact-item">
-                            <div className="contact-item-icon">📞</div>
-                            <div className="contact-item-text">
-                                <h4>Phone</h4>
-                                <p>+1 (555) 123-4567</p>
-                            </div>
-                        </div>
 
                         <div className="contact-item">
                             <div className="contact-item-icon">📍</div>
                             <div className="contact-item-text">
                                 <h4>Address</h4>
-                                <p>123 Design Street<br/>Creative District, CD 12345</p>
+                                <p>Bamburi Road<br/>Bamburi, Mombasa</p>
                             </div>
                         </div>
 
@@ -85,5 +176,20 @@ export default function Contact() {
             </div>
         </div>
     </div>
+
+
+
   );
-}
+};
+
+export default Contact;
+
+
+
+
+
+
+
+
+
+
