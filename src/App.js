@@ -17,7 +17,7 @@ import Quiz from './quiz/Quiz'
 import QuizComponent from './quiz/QuizTwo'
 import Front from './kcse/Front'
 import Login from './components/Login';
-import ProtectedRoute from './components/ProtectedRoute';
+// import ProtectedRoute from './components/ProtectedRoute';
 // import CourseSelection from './components/CourseSelection';
 // import SubjectSelection from './components/SubjectSelection';
 
@@ -71,24 +71,10 @@ function App() {
           <Route path="/study" element={<Study />} />
          
       
-{/*    
-          <Route path="/course-selection" element={
-            <ProtectedRoute>
-              <CourseSelection />
-            </ProtectedRoute>
-          } /> */}
           
-          {/* <Route path="/subject-selection" element={
-            <ProtectedRoute>
-              <SubjectSelection />
-            </ProtectedRoute>
-          } /> */}
+      
    
-          {/* <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <Dash />
-            </ProtectedRoute>
-          } /> */}
+         
           <Route path="/books" element={<Ebooks />} />
           {/* <Route path="/books/:slug" element={<Detail />} /> */}
           <Route path="/books/:id/:slug" element={<Detail />} />

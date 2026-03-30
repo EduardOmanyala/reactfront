@@ -1,6 +1,6 @@
 // src/components/Home.js
 import { useParams } from "react-router-dom";
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { cpaLevels } from "./cpaData";
 import "./Cpa.css";
 
