@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MMFRateChart from "./MMFRateChart";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "./calculator.css";
 
 
@@ -278,7 +278,7 @@ return (
             in your next digital campaign?!
           </p>
 
-          <a href="#" className="linkbanner">
+          <a href="https://ken-lib.com/" className="linkbanner">
             contact us <span className="arrowbanner">→</span>
           </a>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import '../questions/Questions.css';
 import BASE_URL from "../../Config";
@@ -30,7 +30,8 @@ const CpaQuestions = () => {
     }
   }, []);
 
-  const fetchQuestions = async () => {
+  // ✅ Memoized fetch function (fixes dependency warning)
+  const fetchQuestions = useCallback(async () => {
     setLoading(true);
     setError('');
 
@@ -49,18 +50,18 @@ const CpaQuestions = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [paperId]);
 
+  // ✅ Fetch when paperId changes
   useEffect(() => {
     if (paperId) {
       fetchQuestions();
     }
-  }, [paperId]);
+  }, [paperId, fetchQuestions]);
 
   // ✅ Re-render MathJax AFTER questions load
   useEffect(() => {
     if (questions.length > 0 && window.MathJax) {
-      // small delay ensures DOM is painted
       setTimeout(() => {
         window.MathJax.typesetPromise();
       }, 0);
@@ -74,9 +75,11 @@ const CpaQuestions = () => {
   return (
     <div className="questions-container">
       <div className="questions-header">
-         <h2 className="units-heading">{questions[0]?.subject_title
-    ? `${questions[0].subject_title} - ${questions[0].year}/${questions[0].month}`
-    : ""}</h2>
+        <h2 className="units-heading">
+          {questions[0]?.subject_title
+            ? `${questions[0].subject_title} - ${questions[0].year}/${questions[0].month}`
+            : ""}
+        </h2>
       </div>
 
       <div className="questions-grid-cpa">
@@ -84,33 +87,22 @@ const CpaQuestions = () => {
         {/* LEFT: QUESTIONS */}
         <div className="question-section-cpa">
           <div className="questions-card">
-            {/* <div className="questions-header-inner">
-              <h3 style={{ color: 'white' }}>Questions</h3>
-            </div> */}
-            <div
-            className="questions-header-inner"
-           
-          >
-            <h3 style={{ color: 'white', margin: 0 }}>Questions</h3>
-            <button 
-              style={{
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                border: 'none',
-                padding: '6px 12px',
-                borderRadius: '20px',
-                cursor: 'pointer'
-              }}
-              onClick={() => console.log('Button clicked!')}
-            >
-              My Button
-            </button>
-          </div>
-
-
-
-
-
+            <div className="questions-header-inner">
+              <h3 style={{ color: 'white', margin: 0 }}>Questions</h3>
+              <button
+                style={{
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  padding: '6px 12px',
+                  borderRadius: '20px',
+                  cursor: 'pointer'
+                }}
+                onClick={() => console.log('Button clicked!')}
+              >
+                My Button
+              </button>
+            </div>
 
             {!loading && !error && questions.length > 0 && (
               <div className="questions-list">
