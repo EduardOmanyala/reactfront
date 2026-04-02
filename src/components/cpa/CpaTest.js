@@ -9,6 +9,11 @@ const CpaQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [expandedPane, setExpandedPane] = useState(null); // 'questions' | 'answers' | null
+
+  const togglePane = (pane) => {
+    setExpandedPane((prev) => (prev === pane ? null : pane));
+  };
 
   // ✅ Load MathJax script ONCE
   useEffect(() => {
@@ -85,11 +90,13 @@ const CpaQuestions = () => {
       <div className="questions-grid-cpa">
 
         {/* LEFT: QUESTIONS */}
+        {expandedPane !== 'answers' && (
         <div className="question-section-cpa">
           <div className="questions-card">
             <div className="questions-header-inner">
               <h3 style={{ color: 'white', margin: 0 }}>Questions</h3>
               <button
+                id="max-min-questions"
                 style={{
                   backgroundColor: '#4CAF50',
                   color: 'white',
@@ -98,9 +105,9 @@ const CpaQuestions = () => {
                   borderRadius: '20px',
                   cursor: 'pointer'
                 }}
-                onClick={() => console.log('Button clicked!')}
+                onClick={() => togglePane('questions')}
               >
-                My Button
+                {expandedPane === 'questions' ? 'Minimize' : 'Maximize'}
               </button>
             </div>
 
@@ -122,12 +129,31 @@ const CpaQuestions = () => {
             )}
           </div>
         </div>
+        )}
 
         {/* RIGHT: ANSWERS */}
+        {expandedPane !== 'questions' && (
         <div className="answer-section-cpa">
           <div className="questions-card">
             <div className="questions-header-inner">
               <h3 style={{ color: 'white' }}>Answers</h3>
+
+              <button
+              id="max-min-answers"
+                style={{
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  padding: '6px 12px',
+                  borderRadius: '20px',
+                  cursor: 'pointer'
+                }}
+                onClick={() => togglePane('answers')}
+              >
+                {expandedPane === 'answers' ? 'Minimize' : 'Maximize'}
+              </button>
+
+
             </div>
 
             {error && <div className="error-message">{error}</div>}
@@ -165,6 +191,7 @@ const CpaQuestions = () => {
             )}
           </div>
         </div>
+        )}
 
       </div>
     </div>
