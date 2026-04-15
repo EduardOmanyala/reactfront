@@ -423,6 +423,28 @@
   margin-bottom: 0;
 }
 
+.question-text table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.question-text table td,
+.question-text table th {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Alternate column colors */
+.question-text table td:nth-child(odd),
+.question-text table th:nth-child(odd) {
+  background-color: #e6f2ff; /* light blue */
+}
+
+.question-text table td:nth-child(even),
+.question-text table th:nth-child(even) {
+  background-color: #ffffff; /* white */
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .questions-grid {

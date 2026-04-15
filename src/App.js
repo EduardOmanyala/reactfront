@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import BackgroundShapes from './components/BackgroundShapes';
 import Header from './components/Header';
 import Home from './components/Home';
+import Dash from './components/Dash';
 // import About from './components/About';
 import Contact from './components/Contact';
 import Questions from './components/questions/Qlist';
@@ -17,7 +18,8 @@ import Quiz from './quiz/Quiz'
 import QuizComponent from './quiz/QuizTwo'
 import Front from './kcse/Front'
 import Login from './components/Login';
-// import ProtectedRoute from './components/ProtectedRoute';
+import Register from './components/Register';
+import ProtectedRoute from './components/ProtectedRoute';
 // import CourseSelection from './components/CourseSelection';
 // import SubjectSelection from './components/SubjectSelection';
 
@@ -40,7 +42,7 @@ import CpaQuestions from './components/cpa/CpaTest';
 function App() {
 
   const location = useLocation();
-  const noLayoutRoutes = ["/login"];
+  const noLayoutRoutes = ["/login", "/register"];
 
   const hideLayout = noLayoutRoutes.includes(location.pathname);
   
@@ -55,6 +57,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/questions" element={<Questions />} />
           <Route path="/questions-bank" element={<QuestionsBank />} />
           <Route path="/random-questions" element={<Random />} />
@@ -71,7 +74,15 @@ function App() {
           <Route path="/study" element={<Study />} />
 
 
-           <Route path="/contact" element={<Contact />} />      
+           <Route path="/contact" element={<Contact />} /> 
+           <Route
+             path="/dashboard"
+             element={
+               <ProtectedRoute>
+                 <Dash />
+               </ProtectedRoute>
+             }
+           />
       
           
       

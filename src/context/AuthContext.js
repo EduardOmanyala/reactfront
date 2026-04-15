@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
-  login as loginAPI, 
+  login as loginAPI,
+  register as registerAPI,
   logout as logoutAPI, 
   refreshToken as refreshTokenAPI,
   getUserProfile,
@@ -99,6 +100,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (payload) => {
+    try {
+      setLoading(true);
+      const response = await registerAPI(payload);
+
+      setUser(response.user);
+      setIsAuthenticated(true);
+
+      return response;
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const logout = async () => {
     try {
       await logoutAPI();
@@ -143,6 +160,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     loading,
     login,
+    register,
     logout,
     refreshToken,
     updateUser

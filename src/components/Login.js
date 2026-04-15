@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
@@ -65,7 +65,7 @@ const Login = () => {
             </div>
           )}
 
-          <div className="form-group">
+          <div className="form-group-log">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -78,7 +78,7 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group-log">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -103,7 +103,9 @@ const Login = () => {
         <div className="login-footer">
           <p>
             Don't have an account?{' '}
-            <span className="link">Contact administrator</span>
+            <Link to="/register" className="link">
+              Create one
+            </Link>
           </p>
         </div>
       </div>

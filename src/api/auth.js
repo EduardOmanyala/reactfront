@@ -37,7 +37,19 @@ export const login = async (email, password) => {
   }
 };
 
-// Register API
+const formatApiErrors = (data) => {
+  if (!data || typeof data !== 'object') return 'Registration failed';
+  if (data.detail) return Array.isArray(data.detail) ? data.detail.join(' ') : String(data.detail);
+  const parts = [];
+  for (const [key, val] of Object.entries(data)) {
+    if (Array.isArray(val)) parts.push(`${key}: ${val.join(' ')}`);
+    else if (typeof val === 'object' && val !== null) parts.push(`${key}: ${JSON.stringify(val)}`);
+    else parts.push(`${key}: ${val}`);
+  }
+  return parts.length ? parts.join(' ') : 'Registration failed';
+};
+
+// Register API — expects { email, pass1, pass2, first_name }
 export const register = async (userData) => {
   try {
     const response = await fetch(`${API_BASE_URL}/register/`, {
@@ -49,10 +61,14 @@ export const register = async (userData) => {
     });
 
     const data = await response.json();
-    
+
     if (!response.ok) {
-      throw new Error(data.error || 'Registration failed');
+      throw new Error(data.error || formatApiErrors(data));
     }
+
+    if (data.access) localStorage.setItem('access_token', data.access);
+    if (data.refresh) localStorage.setItem('refresh_token', data.refresh);
+    if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
 
     return data;
   } catch (error) {

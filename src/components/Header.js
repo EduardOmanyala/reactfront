@@ -1,15 +1,36 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import './gen.css';
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
   const location = useLocation();
   const activePage = location.pathname;
-  const { user, logout, isAuthenticated } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setProfileOpen(false);
+      }
+    };
+
+    if (profileOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [profileOpen]);
 
   const handleLogout = async () => {
+    setProfileOpen(false);
     await logout();
   };
 
@@ -62,12 +83,12 @@ export default function Header() {
             <div className="desktop-nav">
               {isAuthenticated ? (
                 <div className="nav-links flex gap-4 items-center">
-                  <Link
+                  {/* <Link
                     to="/"
                     className={activePage === "/" ? "active" : ""}
                   >
                     Home
-                  </Link>
+                  </Link> */}
                 
                   <Link
                     to="/questions-bank"
@@ -80,35 +101,64 @@ export default function Header() {
                     to="/finance/mmf/kenya"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
-                    MMF
+                    Finance
                   </Link>
                                 
-                  <Link
+                  {/* <Link
                     to="/dashboard"
                     className={activePage === "/dashboard" ? "active" : ""}
                   >
                     Dashboard
-                  </Link>
-                  <div className="user-menu flex items-center gap-2">
-                    <span className="text-white text-sm">
-                      Welcome, {user?.first_name || user?.email}
-                    </span>
+                  </Link> */}
+                  <div className="user-menu flex items-center gap-2" ref={profileMenuRef}>
                     <button
-                      onClick={handleLogout}
-                      className="logout-btn px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-sm transition-colors"
+                      type="button"
+                      className="profile-icon-btn"
+                      aria-haspopup="menu"
+                      aria-expanded={profileOpen}
+                      aria-label="Open profile menu"
+                      onClick={() => setProfileOpen((prev) => !prev)}
                     >
-                      Logout
+                      <FaUserCircle size={27} className="profile-icon" />
                     </button>
+                    {profileOpen && (
+                      <div className="main-dropdwn" role="menu">
+                        <Link
+                          to="/dashboard"
+                          className="user-dropdown-item"
+                          role="menuitem"
+                          onClick={() => setProfileOpen(false)}
+                        >
+                          Profile
+                        </Link>
+                        <Link
+                          to="/books"
+                          className="user-dropdown-item"
+                          role="menuitem"
+                          onClick={() => setProfileOpen(false)}
+                        >
+                          Purchases
+                        </Link>
+                        <button
+                          type="button"
+                          className="user-dropdown-item user-dropdown-item-danger"
+                          role="menuitem"
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               ) : (
                 <div className="nav-links flex gap-4">
-                  <Link
+                  {/* <Link
                     to="/"
                     className={activePage === "/" ? "active" : ""}
                   >
                     Home
-                  </Link>
+                  </Link> */}
               
                   <Link
                     to="/books"
@@ -120,13 +170,19 @@ export default function Header() {
                     to="/finance/mmf/kenya"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
-                    MMF
+                    Finance
                   </Link>
                   <Link
                     to="/study"
                     className={activePage === "#" ? "active" : ""}
                   >
                     Study
+                  </Link>
+                   <Link
+                    to="/login"
+                    className={activePage === "#" ? "active" : ""}
+                  >
+                    Sign In
                   </Link>
                 </div>
               )}
@@ -158,16 +214,16 @@ export default function Header() {
       <div className={`mobile-nav ${menuOpen ? 'open' : ''}`}>
         {isAuthenticated ? (
           <div className="mobile-nav-links">
-            <Link
+            {/* <Link
               to="/"
               className={activePage === "/" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
               Home
-            </Link>
+            </Link> */}
           
             <Link
-              to="/questions-bank"
+              to="/books"
               className={activePage === "/books" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
@@ -179,20 +235,20 @@ export default function Header() {
               className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              MMF
+              Finance
             </Link>
                           
             <Link
-              to="/dashboard"
-              className={activePage === "/dashboard" ? "active" : ""}
+              to="/study"
+              className={activePage === "/study" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              Dashboard
+              Study
             </Link>
             <div className="mobile-user-menu">
-              <div className="user-welcome">
+              {/* <div className="user-welcome">
                 Welcome, {user?.first_name || user?.email}
-              </div>
+              </div> */}
               <button
                 onClick={() => {
                   handleLogout();
@@ -206,13 +262,13 @@ export default function Header() {
           </div>
         ) : (
           <div className="mobile-nav-links">
-            <Link
+            {/* <Link
               to="/"
               className={activePage === "/" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
               Home
-            </Link>
+            </Link> */}
         
             <Link
               to="/books"
@@ -222,18 +278,18 @@ export default function Header() {
               Books
             </Link>
             <Link
-              to="/kcse"
-              className={activePage === "/kcse" ? "active" : ""}
+              to="/finance/mmf/kenya"
+              className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              Study
+              Finance
             </Link>
             <Link
               to="/study"
               className={activePage === "#" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              CPA
+              Study
             </Link>
           </div>
         )}

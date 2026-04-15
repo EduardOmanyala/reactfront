@@ -4,40 +4,45 @@ import MMFRateChart from "./MMFRateChart";
 import "./calculator.css";
 
 
+
 const MMF_PROVIDERS = {
-  NDVU: { name: "Ndovu Wealth Limited", rate: 11.1 },
-  ARVC: { name: "ArvoCap Asset Managers Limited", rate: 11.68 },
-  LFCB: { name: "Lofty-Corban Investments Limited", rate: 9 },
-  KCBM: { name: "KCB Asset Management Limited", rate: 8.5 },
-  ETCA: { name: "Etica Capital Limited", rate: 9.4 },
-  GNFA: { name: "GenAfrica Asset Managers", rate: 8 },
-  STNB: { name: "Stanbic Unit Trust Funds", rate: 5.5 },
-  NABC: { name: "Nabo Capital Limited", rate: 9.8 },
-  FAUL: { name: "Faulu Microfinance Bank Limited", rate: 7.7 },
-  KZAM: { name: "Kuza Asset Management Limited", rate: 9 },
-  CYTN: { name: "Cytonn Asset Managers Limited", rate: 10 },
-  JBLE: { name: "Jubilee Financial Services Limited", rate: 8.7 },
-  MALI: { name: "Mali Money Market Fund (Safaricom)", rate: 7 },
-  ENWL: { name: "Enwealth Financial Services", rate: 9 },
-  DRYA: { name: "Dry Associates", rate: 7.6 },
-  SNLM: { name: "Sanlam Investments East Africa", rate: 7.6 },
-  GHIM: { name: "GenCap Hela Imara (Genghis Capital)", rate: 7 },
-  APOL: { name: "Apollo Asset Management Company", rate: 7.7 },
-  ABSH: { name: "Absa Shilling Money Market Fund", rate: 6.8 },
-  OMUT: { name: "Old Mutual Unit Trust Scheme", rate: 8.5 },
-  GLFC: { name: "GulfCap Investment Bank", rate: 8.7 },
-  ORTK: { name: "Orient Kasha Money Market Fund", rate: 8.5 },
-  ZIDI: { name: "Ziidi Collective Investment Scheme", rate: 5 },
-  CICM: { name: "CIC Asset Managers Limited", rate: 7.8 },
-  COOP: { name: "Co-op Trust Investment Services", rate: 7.2 },
-  IELA: { name: "ICEA Lion Asset Management", rate: 7.2 },
-  BRTM: { name: "Britam Asset Managers (Kenya) Limited", rate: 8.2 },
-  IMCP: { name: "I&M Capital Limited", rate: 7.9 },
-  MYFR: { name: "Mayfair Asset Managers Limited", rate: 6.5 },
-  ALAK: { name: "African Alliance Kenya Asset Management", rate: 5.5 },
-  MDSN: { name: "Madison Investment Managers Limited", rate: 8.1 },
-  EQIB: { name: "Equity Investment Bank Money Market Fund", rate: 4 }
+  NDVU: { name: "Ndovu Wealth Limited", rate: 10.5 },
+  ARVC: { name: "ArvoCap Asset Managers Limited", rate: 10.7 },
+  LFCB: { name: "Lofty-Corban Investments Limited", rate: 10.6 },
+  KCBM: { name: "KCB Asset Management Limited", rate: 9.0 },
+  ETCA: { name: "Etica Capital Limited", rate: 11.8 },
+  GNFA: { name: "GenAfrica Asset Managers", rate: 9.5 },
+  STNB: { name: "Stanbic Unit Trust Funds", rate: 4.5 },
+  NABC: { name: "Nabo Capital Limited", rate: 12.9 },
+  FAUL: { name: "Faulu Microfinance Bank Limited", rate: 10.2 },
+  KZAM: { name: "Kuza Asset Management Limited", rate: 10.2 },
+  CYTN: { name: "Cytonn Asset Managers Limited", rate: 11.2 },
+  JBLE: { name: "Jubilee Financial Services Limited", rate: 10.7 },
+  MALI: { name: "Mali Money Market Fund (Safaricom)", rate: 8.0 },
+  ENWL: { name: "Enwealth Financial Services", rate: 10.7 },
+  DRYA: { name: "Dry Associates", rate: 9.4 },
+  SNLM: { name: "Sanlam Investments East Africa", rate: 9.3 },
+  GHIM: { name: "GenCap Hela Imara (Genghis Capital)", rate: 8.8 },
+  APOL: { name: "Apollo Asset Management Company", rate: 8.5 },
+  ABSH: { name: "Absa Shilling Money Market Fund", rate: 7.3 },
+  OMUT: { name: "Old Mutual Unit Trust Scheme", rate: 10.1 },
+  GLFC: { name: "GulfCap Investment Bank", rate: 10.8 },
+  ORTK: { name: "Orient Kasha Money Market Fund", rate: 10.4 },
+  ZIDI: { name: "Ziidi Collective Investment Scheme", rate: 6.0 },
+  CICM: { name: "CIC Asset Managers Limited", rate: 8.4 },
+  COOP: { name: "Co-op Trust Investment Services", rate: 8.2 },
+  IELA: { name: "ICEA Lion Asset Management", rate: 8.3 },
+  BRTM: { name: "Britam Asset Managers (Kenya) Limited", rate: 9.5 },
+  IMCP: { name: "I&M Capital Limited", rate: 9.2 },
+  MYFR: { name: "Mayfair Asset Managers Limited", rate: 6.9 },
+  ALAK: { name: "African Alliance Kenya Asset Management", rate: 5.9 },
+  MDSN: { name: "Madison Investment Managers Limited", rate: 10.3 },
+  EQIB: { name: "Equity Investment Bank Money Market Fund", rate: 4 }  // Not listed in the latest April 13 update (may have changed or be less actively tracked)
 };
+
+
+
+
 
 
 export default function MMFCalculator() {
@@ -262,7 +267,7 @@ return (
     </div>
 
      {/* Ad section */}
-     <div className="mainbanner">
+     {/* <div className="mainbanner">
       <div
         className="imagebanner"
         style={{ backgroundImage: "url(/images/invest.jpg)" }}
@@ -283,7 +288,7 @@ return (
           </a>
         </div>
       </div>
-    </div>
+    </div> */}
 
 
 
