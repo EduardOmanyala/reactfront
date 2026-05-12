@@ -38,19 +38,12 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section className="features">
-                    <Link to="/kcse" style={{ textDecoration: 'none', color: 'inherit' }} >
+                <section className="features2">
+                    <Link to="/finance" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
-                        <div className="feature-icon">✨</div>
-                        <h3>KCSE</h3>
-                        <p>Download past papers with marking schemes on all examinable subjects. Take auto marked quizzes to boost your revision.</p>
-                    </div>
-                    </Link>
-                     <Link to="/cpa/home" style={{ textDecoration: 'none', color: 'inherit' }} >
-                    <div className="feature-card glass">
-                        <div className="feature-icon">⚡</div>
-                        <h3>CPA</h3>
-                        <p>Level up your revision by getting the latest revision kits and questions. Quiz yourself to gauge your readiness.</p>
+                        <div className="feature-icon">🎨</div>
+                        <h3>Markets</h3>
+                        <p>Money Market Funds, T/Bills, T/Bonds, Offshore Stock, NSE. Build your ideal portfolio using a variety of Assets. </p>
                     </div>
                     </Link>
                     <Link to="/books" style={{ textDecoration: 'none', color: 'inherit' }} >
@@ -60,18 +53,28 @@ export default function Home() {
                         <p>Upskill or reskill with expert authored books on a wide range of topics & areas of practice you may be interested in.</p>
                     </div>
                     </Link>
-                    <Link to="/finance/mmf/kenya" style={{ textDecoration: 'none', color: 'inherit' }} >
+
+                    {/* <Link to="/kcse" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
-                        <div className="feature-icon">🎨</div>
-                        <h3>MMF</h3>
-                        <p>The latest news. Rate changes. Estimate retruns and compare different providers to find what best for you.</p>
+                        <div className="feature-icon">✨</div>
+                        <h3>KCSE</h3>
+                        <p>Download past papers with marking schemes on all examinable subjects. Take auto marked quizzes to boost your revision.</p>
+                    </div>
+                    </Link> */}
+                     <Link to="/cpa/home" style={{ textDecoration: 'none', color: 'inherit' }} >
+                    <div className="feature-card glass">
+                        <div className="feature-icon">⚡</div>
+                        <h3>Study</h3>
+                        <p>Find study resources for your exam. Test questions with answers, modern revision platform with advanced e-leaning resources. </p>
                     </div>
                     </Link>
+                    
+                    
                    <Link to="/land-prices-by-county-in-kenya" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
                         <div className="feature-icon">🔒</div>
-                        <h3>Land</h3>
-                        <p>All you need to know about land prices in kenya, purchase processes and other important information.</p>
+                        <h3>Blog</h3>
+                        <p>Latest news, stock market prediction, financial news, educational news, and entrepreneurship guidance. FX market trends and much more.</p>
                     </div>
                     </Link>
 

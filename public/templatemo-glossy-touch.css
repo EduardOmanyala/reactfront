@@ -319,6 +319,15 @@ button[type="submit"] {
     margin-bottom: 40px;
 }
 
+.features2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
 .features1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -333,6 +342,13 @@ button[type="submit"] {
     }
 }
 
+@media (max-width: 768px) {
+    .features2 {
+        margin-left: 2%;
+        margin-right: 2%;
+     
+    }
+}
 
 
 .feature-card {

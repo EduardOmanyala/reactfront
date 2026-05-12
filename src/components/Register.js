@@ -8,7 +8,6 @@ const Register = () => {
     email: '',
     pass1: '',
     pass2: '',
-    username: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -30,13 +29,6 @@ const Register = () => {
     setError('');
     setSuccess('');
 
-    const firstName = formData.username.trim();
-    if (!firstName) {
-      setError('Please enter a username.');
-      setLoading(false);
-      return;
-    }
-
     if (formData.pass1 !== formData.pass2) {
       setError('Passwords do not match.');
       setLoading(false);
@@ -48,7 +40,6 @@ const Register = () => {
         email: formData.email.trim(),
         pass1: formData.pass1,
         pass2: formData.pass2,
-        first_name: firstName,
       });
       setSuccess('Account created!');
 
@@ -74,21 +65,6 @@ const Register = () => {
           {error && <div className="error-message">{error}</div>}
 
           {success && <div className="success-message">{success}</div>}
-
-          <div className="form-group-log">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              autoComplete="username"
-              placeholder="e.g. Lion123"
-              maxLength={150}
-            />
-          </div>
 
           <div className="form-group-log">
             <label htmlFor="email">Email</label>

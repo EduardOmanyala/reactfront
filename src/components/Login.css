@@ -87,6 +87,20 @@
   margin-top: 10px;
 }
 
+.login-button2 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  width: 100%;
+}
+
 .login-button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
@@ -133,7 +147,7 @@
 .link {
   color: #86efac;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
 

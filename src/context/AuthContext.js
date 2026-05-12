@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   login as loginAPI,
   register as registerAPI,
@@ -21,6 +22,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
           console.error('Automatic token refresh failed:', error);
         }
-      }, 50 * 60 * 1000); // Refresh every 50 minutes (tokens last 60 minutes)
+      }, 4 * 60 * 1000); // Must be < Django ACCESS_TOKEN_LIFETIME (5 min in testapp/settings)
 
       return () => clearInterval(refreshInterval);
     }
@@ -124,6 +126,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setUser(null);
       setIsAuthenticated(false);
+      navigate('/', { replace: true });
     }
   };
 
@@ -144,8 +147,10 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setIsAuthenticated(false);
       localStorage.removeItem('access_token');
+      localStorage.removeItem('access');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
+      navigate('/', { replace: true });
       throw error;
     }
   };

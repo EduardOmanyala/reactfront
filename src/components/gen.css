@@ -44,11 +44,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   color: black;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
+}
+
+.notification-count {
+  position: absolute;
+  top: 3px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
 }
 
 .main-dropdwn {
@@ -59,7 +76,7 @@
   padding: 0.35rem 0;
   border-radius: 0px;
   /* background: rgba(255, 255, 255, 0.12); */
-  background: grey;
+  background: #16213e;
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);

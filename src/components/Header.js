@@ -1,8 +1,35 @@
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import BASE_URL from "../Config";
+import { authFetch } from "../api/auth";
 import './gen.css';
 import { FaUserCircle } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
+
+const UNREAD_NOTIFICATION_URLS = [
+  `${BASE_URL}/notifications/unread/`,
+  `${BASE_URL}/api/notifications/unread/`,
+];
+
+const MARK_READ_URLS = [
+  `${BASE_URL}/notifications/mark-read/`,
+  `${BASE_URL}/api/notifications/mark-read/`,
+];
+
+const ALL_NOTIFICATIONS_URLS = [
+  `${BASE_URL}/notifications/get-all/`,
+  `${BASE_URL}/api/notifications/get-all/`,
+];
+
+const requestNotificationsEndpoint = async (urls, options) => {
+  for (const url of urls) {
+    const response = await authFetch(url, options);
+    if (response.ok) return response;
+    if (response.status !== 404) return response;
+  }
+  throw new Error("Notifications endpoint not found");
+};
 
 export default function Header() {
   const location = useLocation();
@@ -11,26 +38,129 @@ export default function Header() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [unreadNotifications, setUnreadNotifications] = useState([]);
+  const [allNotifications, setAllNotifications] = useState([]);
   const profileMenuRef = useRef(null);
+  const notificationsMenuRef = useRef(null);
+
+  const notificationCount = unreadNotifications.length;
+  const fetchUnreadNotifications = useCallback(async () => {
+    try {
+      const response = await requestNotificationsEndpoint(UNREAD_NOTIFICATION_URLS, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch unread notifications");
+      }
+
+      const data = await response.json();
+      setUnreadNotifications(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Error fetching unread notifications:", error);
+      setUnreadNotifications([]);
+    }
+  }, []);
+
+  const markNotificationsAsRead = async () => {
+    try {
+      const response = await requestNotificationsEndpoint(MARK_READ_URLS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to mark notifications as read");
+      }
+
+      setUnreadNotifications([]);
+    } catch (error) {
+      console.error("Error marking notifications as read:", error);
+    }
+  };
+
+  const fetchAllNotifications = async () => {
+    try {
+      const response = await requestNotificationsEndpoint(ALL_NOTIFICATIONS_URLS, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch all notifications");
+      }
+
+      const data = await response.json();
+      setAllNotifications(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Error fetching all notifications:", error);
+      setAllNotifications([]);
+    }
+  };
+
+  const formatTimeAgo = (timestamp) => {
+    if (!timestamp) return "";
+    const createdTime = new Date(timestamp).getTime();
+    if (Number.isNaN(createdTime)) return "";
+
+    const seconds = Math.max(0, Math.floor((Date.now() - createdTime) / 1000));
+    if (seconds < 60) return "just now";
+
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes} min${minutes === 1 ? "" : "s"} ago`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} hr${hours === 1 ? "" : "s"} ago`;
+
+    const days = Math.floor(hours / 24);
+    return `${days} day${days === 1 ? "" : "s"} ago`;
+  };
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
         setProfileOpen(false);
       }
+
+      if (
+        notificationsMenuRef.current &&
+        !notificationsMenuRef.current.contains(event.target)
+      ) {
+        setNotificationsOpen(false);
+      }
     };
 
-    if (profileOpen) {
+    if (profileOpen || notificationsOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [profileOpen]);
+  }, [profileOpen, notificationsOpen]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setUnreadNotifications([]);
+      setAllNotifications([]);
+      return;
+    }
+
+    // Fetch once when authenticated (no interval polling).
+    fetchUnreadNotifications();
+  }, [fetchUnreadNotifications, isAuthenticated]);
 
   const handleLogout = async () => {
     setProfileOpen(false);
+    setNotificationsOpen(false);
     await logout();
   };
 
@@ -91,17 +221,24 @@ export default function Header() {
                   </Link> */}
                 
                   <Link
-                    to="/questions-bank"
+                    to="/books"
                     className={activePage === "/books" ? "active" : ""}
                   >
                     Books
+                  </Link>
+
+                   <Link
+                    to="/study"
+                    className={activePage === "#" ? "active" : ""}
+                  >
+                    Study
                   </Link>
                   
                   <Link
                     to="/finance/mmf/kenya"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
-                    Finance
+                    Markets
                   </Link>
                                 
                   {/* <Link
@@ -110,6 +247,69 @@ export default function Header() {
                   >
                     Dashboard
                   </Link> */}
+
+                   <div className="user-menu flex items-center gap-2" ref={notificationsMenuRef}>
+                    <button
+                      type="button"
+                      className="profile-icon-btn"
+                      aria-haspopup="menu"
+                      aria-expanded={notificationsOpen}
+                      aria-label="Open notifications menu"
+                      onClick={async () => {
+                        const shouldOpen = !notificationsOpen;
+                        setNotificationsOpen(shouldOpen);
+                        setProfileOpen(false);
+
+                        if (shouldOpen) {
+                          await fetchAllNotifications();
+                        }
+
+                        if (shouldOpen && notificationCount > 0) {
+                          await markNotificationsAsRead();
+                        }
+                      }}
+                    >
+                      <FaBell  size={25} className="profile-icon" />
+                      {notificationCount > 0 && (
+                        <span className="notification-count">{notificationCount}</span>
+                      )}
+                    </button>
+                    {notificationsOpen && (
+                      <div className="main-dropdwn" role="menu">
+                        {allNotifications.length > 0 ? (
+                          allNotifications.map((notification) => {
+                            const bookId = notification.book_id ?? notification.book;
+                            const bookSlug = notification.book_slug;
+                            const notificationPath = bookId && bookSlug
+                              ? `/books/${bookId}/${bookSlug}`
+                              : "/books";
+
+                            return (
+                              <Link
+                              key={notification.id}
+                              className="user-dropdown-item"
+                              role="menuitem"
+                              to={notificationPath}
+                              onClick={() => setNotificationsOpen(false)}
+                            >
+                              <div style={{ fontSize: "0.82rem", lineHeight: 1.3 }}>
+                                {notification.text || "New notification"}
+                              </div>
+                              <div style={{ fontSize: "0.72rem", opacity: 0.75, marginTop: "0.2rem" }}>
+                                {formatTimeAgo(notification.created_at)}
+                              </div>
+                            </Link>
+                            );
+                          })
+                        ) : (
+                          <div className="user-dropdown-item" role="menuitem">
+                            No notifications
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
                   <div className="user-menu flex items-center gap-2" ref={profileMenuRef}>
                     <button
                       type="button"
@@ -117,7 +317,10 @@ export default function Header() {
                       aria-haspopup="menu"
                       aria-expanded={profileOpen}
                       aria-label="Open profile menu"
-                      onClick={() => setProfileOpen((prev) => !prev)}
+                      onClick={() => {
+                        setProfileOpen((prev) => !prev);
+                        setNotificationsOpen(false);
+                      }}
                     >
                       <FaUserCircle size={27} className="profile-icon" />
                     </button>
@@ -150,6 +353,10 @@ export default function Header() {
                       </div>
                     )}
                   </div>
+
+                 
+
+
                 </div>
               ) : (
                 <div className="nav-links flex gap-4">
@@ -170,7 +377,7 @@ export default function Header() {
                     to="/finance/mmf/kenya"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
-                    Finance
+                    Markets
                   </Link>
                   <Link
                     to="/study"
@@ -235,7 +442,7 @@ export default function Header() {
               className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              Finance
+              Markets
             </Link>
                           
             <Link
@@ -282,7 +489,7 @@ export default function Header() {
               className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
-              Finance
+              Markets
             </Link>
             <Link
               to="/study"
@@ -291,6 +498,12 @@ export default function Header() {
             >
               Study
             </Link>
+              <Link
+                    to="/login"
+                    className={activePage === "#" ? "active" : ""}
+                  >
+                    Sign In
+                  </Link>
           </div>
         )}
       </div>

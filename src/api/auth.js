@@ -1,13 +1,10 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
-// Helper function to get auth headers
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('access_token');
-  return {
-    'Content-Type': 'application/json',
-    ...(token && { 'Authorization': `Bearer ${token}` })
-  };
-};
+const API_BASE_URL = 'https://api.ken-lib.com/api';
+
+
+/** Access token key used by this app; legacy `access` supported for older screens. */
+export const getAccessToken = () =>
+  localStorage.getItem('access_token') || localStorage.getItem('access');
 
 // Login API
 export const login = async (email, password) => {
@@ -49,7 +46,7 @@ const formatApiErrors = (data) => {
   return parts.length ? parts.join(' ') : 'Registration failed';
 };
 
-// Register API — expects { email, pass1, pass2, first_name }
+// Register API — expects { email, pass1, pass2 }
 export const register = async (userData) => {
   try {
     const response = await fetch(`${API_BASE_URL}/register/`, {
@@ -95,26 +92,9 @@ export const logout = async () => {
   } finally {
     // Clear local storage regardless of API call success
     localStorage.removeItem('access_token');
+    localStorage.removeItem('access');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
-  }
-};
-
-// Get user profile
-export const getUserProfile = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/profile/`, {
-      method: 'GET',
-      headers: getAuthHeaders(),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to get user profile');
-    }
-
-    return await response.json();
-  } catch (error) {
-    throw error;
   }
 };
 
@@ -143,7 +123,9 @@ export const refreshToken = async () => {
 
     // Update stored tokens
     localStorage.setItem('access_token', data.access);
-    localStorage.setItem('refresh_token', data.refresh);
+    if (data.refresh) {
+      localStorage.setItem('refresh_token', data.refresh);
+    }
 
     return data;
   } catch (error) {
@@ -152,10 +134,51 @@ export const refreshToken = async () => {
   }
 };
 
-// Check if user is authenticated
+/**
+ * Authenticated fetch. On 401, refreshes the access token once (backend uses short-lived JWTs)
+ * and retries the same request.
+ */
+export const authFetch = async (url, options = {}) => {
+  const doFetch = () => {
+    const token = getAccessToken();
+    const headers = {
+      ...(options.headers || {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+    return fetch(url, { ...options, headers });
+  };
+
+  let response = await doFetch();
+  if (response.status === 401 && localStorage.getItem('refresh_token')) {
+    try {
+      await refreshToken();
+      response = await doFetch();
+    } catch {
+      // keep the 401 response
+    }
+  }
+  return response;
+};
+
+// Get user profile
+export const getUserProfile = async () => {
+  const response = await authFetch(`${API_BASE_URL}/profile/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to get user profile');
+  }
+
+  return await response.json();
+};
+
+// Check if user is authenticated (presence of token only — token may be expired; authFetch refreshes)
 export const isAuthenticated = () => {
-  const token = localStorage.getItem('access_token');
-  return !!token;
+  return !!getAccessToken();
 };
 
 // Get current user
@@ -166,7 +189,7 @@ export const getCurrentUser = () => {
 
 // Debug function to check token status
 export const debugTokens = () => {
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = getAccessToken();
   const refreshToken = localStorage.getItem('refresh_token');
   const user = localStorage.getItem('user');
   

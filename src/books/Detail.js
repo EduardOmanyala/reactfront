@@ -1,17 +1,24 @@
 
 
+import { Helmet } from "react-helmet";
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { authFetch } from "../api/auth";
 import BASE_URL from "../Config";
 import "./books.css";
+
 const FALLBACK_COVER =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png";
 
 const Detail = () => {
   const { id, slug } = useParams();
+  const navigate = useNavigate();
+  const { isAuthenticated, loading } = useAuth();
+
   const [book, setBook] = useState(null);
-  // const [allBooks, setAllBooks] = useState([]);
-  // const [showCustomer, setShowCustomer] = useState(false);
+  const [hasPurchased, setHasPurchased] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
 
   useEffect(() => {
     // Fetch single book
@@ -19,24 +26,178 @@ const Detail = () => {
       .then((res) => res.json())
       .then((data) => setBook(data))
       .catch((err) => console.error("Error fetching book:", err));
-
-    // Fetch all for related section
-    fetch(`${BASE_URL}/books/`)
-      .then((res) => res.json())
-      // .then((data) => setAllBooks(data))
-      .catch((err) => console.error("Error fetching books:", err));
   }, [id, slug]);
 
-  if (!book) {
-    return <div>Loading book...</div>;
+  useEffect(() => {
+    if (!isAuthenticated || !book) {
+      setHasPurchased(false);
+      return;
+    }
+
+    const checkPurchase = async () => {
+      try {
+        const response = await authFetch(
+          `${BASE_URL}/purchases/check/${book.id}/`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.status === 401) {
+          setHasPurchased(false);
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Failed to check purchase status");
+        }
+
+        const data = await response.json();
+        setHasPurchased(Boolean(data.purchased));
+      } catch (err) {
+        console.error("Error checking purchase:", err);
+      }
+    };
+
+    checkPurchase();
+  }, [isAuthenticated, book]);
+
+  // Loading state (auth or book)
+  if (loading || !book) {
+    return <div>Loading...</div>;
   }
 
-  // const relatedBooks = allBooks
-  //   .filter((b) => b.id !== book.id)
-  //   .slice(0, 3);
+  // Handle Buy button click
+  const handleBuyClick = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    if (hasPurchased) {
+      return;
+    }
+
+    if (!window.FlutterwaveCheckout) {
+      console.error("Flutterwave script is not loaded.");
+      return;
+    }
+
+    try {
+      setIsPaying(true);
+
+      const userResponse = await authFetch(`${BASE_URL}/user/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (userResponse.status === 401) {
+        navigate("/login");
+        return;
+      }
+
+      if (!userResponse.ok) {
+        throw new Error("Failed to fetch current user");
+      }
+
+      const userData = await userResponse.json();
+      const userId = userData?.id;
+      const email = userData?.email;
+
+      if (!userId || !email) {
+        throw new Error("Missing user id or email");
+      }
+
+      const txRef = `book-${id}-${userId}-${(window.crypto?.randomUUID?.() || Date.now())}`;
+
+      // Trigger Flutterwave payment
+      window.FlutterwaveCheckout({
+        public_key: "FLWPUBK-b36c7e6de3c449c08baf5c9e597ae288-X",
+        tx_ref: txRef,
+        amount: book?.price ?? 0,
+        currency: "KES",
+        redirect_url: `https://ken-lib.com/books/payment-confirm/${id}/${slug}/`,
+        meta: {
+          book_id: id,
+          user_id: userId,
+        },
+        customer: {
+          email,
+          phone_number: "",
+        },
+        customizations: {
+          title: "Testprep Kenya",
+          description: "E-Book Purchase",
+        },
+      });
+    } catch (err) {
+      console.error("Payment initialization error:", err);
+    } finally {
+      setIsPaying(false);
+    }
+  };
+
+      const handleDownload = async () => {
+      try {
+        const response = await authFetch(
+          `${BASE_URL}/books/download/${book.id}/`,
+          {
+            method: "GET",
+          }
+        );
+
+        if (response.status === 401) {
+          navigate("/login");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Download failed");
+        }
+
+        const blob = await response.blob();
+
+        // Try to extract filename from response headers
+        let filename = `book_${book.id}`;
+        const disposition = response.headers.get("Content-Disposition");
+
+        if (disposition && disposition.includes("filename=")) {
+          filename = disposition
+            .split("filename=")[1]
+            .replace(/"/g, "");
+        }
+
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        window.URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error("Download error:", err);
+      }
+    };
+
 
   return (
     <div className="detail-container">
+
+       <Helmet>
+        <title>{book.title}</title>
+      </Helmet>
+
+
+
       <div className="book-detail-grid">
         <div className="book-cover-detail">
           <img
@@ -45,48 +206,50 @@ const Detail = () => {
             onError={(e) => (e.target.src = FALLBACK_COVER)}
           />
         </div>
+
         <div className="book-info">
           <h1 className="t-color">{book.title}</h1>
-          <br/>
-          <p className="t-color"><strong>Author:</strong> {book.author}</p>
-          <br/>
-         
-          <div className="t-color" dangerouslySetInnerHTML={{ __html: book.info }}/>
+          <br />
+          <p className="t-color">
+            <strong>Author:</strong> {book.author}
+          </p>
+          <br />
+
+          <div
+            className="t-color"
+            dangerouslySetInnerHTML={{ __html: book.info }}
+          />
         </div>
+
         <div className="book-purchase">
-          <p className="price">KES {book.price}</p> {/* Add real price field if you have it */}
-          <Link to={`/books/checkout/${book.id}/`}>
-          <button className="buy-now">
-          Buy Now
+          <p className="price">KES {book.price}</p>
+
+          {/* BUY BUTTON */}
+          {(!isAuthenticated || (isAuthenticated && !hasPurchased)) && (
+            <button
+              id="buy"
+              className="buy-now"
+              onClick={handleBuyClick}
+              disabled={isPaying}
+            >
+              {isPaying ? "Processing..." : "Buy Now"}
+            </button>
+          )}
+
+          <br />
+
+          {/* DOWNLOAD BUTTON */}
+          {isAuthenticated && hasPurchased && (
+            <button
+              id="down-btn"
+              className="buy-now mt-1"
+              onClick={handleDownload}
+            >
+              Download
           </button>
-          </Link>
+          )}
         </div>
       </div>
-   
-      {/* <div className="related-books">
-        <h2 className="t-color">Related Books</h2>
-        <div className="books-grid">
-          {relatedBooks.map((relBook) => (
-            <Link
-              key={relBook.id}
-              to={`/books/${relBook.id}/${relBook.slug}`}
-              className="book-card-link"
-            >
-              <div className="book-card">
-                <img
-                  src={relBook.pdf_file || FALLBACK_COVER}
-                  alt={relBook.title}
-                  className="book-cover"
-                  onError={(e) => (e.target.src = FALLBACK_COVER)}
-                />
-                <h3 className="book-title">{relBook.title}</h3>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div> */}
-
-      
     </div>
   );
 };

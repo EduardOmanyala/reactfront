@@ -107,7 +107,25 @@ const Login = () => {
               Create one
             </Link>
           </p>
+          <br/>
+          <p>
+            Forgot Password?{' '}
+            <Link to="/password-reset" className="link">
+              Reset Here
+            </Link>
+          </p>
+          <br/>
+          <Link to="/" className="link">
+              Home
+            </Link>
+
+          
         </div>
+
+         
+
+
+
       </div>
     </div>
   );

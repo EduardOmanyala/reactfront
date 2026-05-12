@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap');
+
+/* ── Blog Page Card Grid ── */
+/* .card-grid-blogpage {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: stretch;
+  width: 100%;
+  padding: 2rem 0;
+  box-sizing: border-box;
+} */
+
+
+.card-grid-blogpage {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+   margin-left: 1.7%;
+  margin-right: 1.7%;
+  /* padding-top: 1%;
+   padding-left: 0.7%;
+  padding-right: 0.7%;
+  background-color: white; */
+}
+
+
+
+
+
+
+/* ── Individual Card ── */
+.card-blogpage {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fff;
+  border-top: 3px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-blogpage2 {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fff;
+  border-top: 3px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-blogpage:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Image Wrapper ── */
+.card-image-wrapper-blogpage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  position: relative;
+  background: #e8e4dc;
+  flex-shrink: 0;
+}
+
+.card-image-blogpage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.card-blogpage:hover .card-image-blogpage {
+  transform: scale(1.03);
+}
+
+/* ── Photo Credit ── */
+.card-photo-credit-blogpage {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.01em;
+}
+
+/* ── Card Body ── */
+.card-body-blogpage {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 1rem 0 0.5rem;
+}
+
+/* ── Category Label ── */
+.card-category-blogpage {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 0.4rem;
+  padding-left: 2%;
+}
+
+/* ── Headline ── */
+.card-title-blogpage {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #111;
+  margin: 0 0 0.65rem 0;
+  letter-spacing: -0.01em;
+  padding-left: 2%;
+}
+
+/* ── Excerpt ── */
+.card-excerpt-blogpage {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #333;
+  margin: 0 0 auto 0;
+  flex: 1;
+  padding-left: 2%;
+}
+
+/* ── Footer Meta ── */
+.card-meta-blogpage {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.72rem;
+  color: #777;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  flex-wrap: wrap;
+  padding-left: 2%;
+}
+
+.card-meta-dot-blogpage {
+  color: #bbb;
+}
+
+.card-meta-author-blogpage {
+  color: #555;
+  font-weight: 400;
+}
+
+/* ── Mobile: Stack vertically ── */
+@media (max-width: 680px) {
+  .card-grid-blogpage {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .card-blogpage {
+    flex: none;
+    width: 100%;
+  }
+
+  .card-image-wrapper-blogpage {
+    aspect-ratio: 16 / 9;
+  }
+
+  .card-title-blogpage {
+    font-size: 1.35rem;
+  }
+}
+
+.post-div {
+  background-color: white;
+  margin-left: 1.7%;
+  margin-right: 1.7%;
+}
+        
+.post-detail-main {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  gap: 2rem;
+   margin-left: 1.7%;
+  margin-right: 1.7%;
+  background-color: white;
+}
+
+.post-title-main {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #111;
+  margin: 0 0 0.65rem 0;
+  letter-spacing: -0.01em;
+  padding-left: 2%;
+  padding-top: 1%;
+   text-align: center;
+}
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.card-link-blogpage {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+

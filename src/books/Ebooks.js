@@ -90,7 +90,7 @@ const Ebooks = () => {
 
   return (
     <div className="ebooks-container">
-      <h1 className="ebooks-header1">Catalogue</h1>
+      {/* <h1 className="ebooks-header1">Catalogue</h1> */}
       <div className="books-grid">
         {books.map(book => (
           <Link key={book.id} to={`/books/${book.id}/${book.slug}`} className="book-card-link">
