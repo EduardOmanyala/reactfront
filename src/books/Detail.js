@@ -89,7 +89,7 @@ const Detail = () => {
     try {
       setIsPaying(true);
 
-      const userResponse = await authFetch(`${BASE_URL}/user/`, {
+      const userResponse = await authFetch(`${BASE_URL}/api/user/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
