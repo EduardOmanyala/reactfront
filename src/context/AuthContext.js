@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   login as loginAPI,
@@ -27,6 +27,29 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const refreshToken = useCallback(async () => {
+    try {
+      const response = await refreshTokenAPI();
+
+      if (response.user) {
+        setUser(response.user);
+        localStorage.setItem('user', JSON.stringify(response.user));
+      }
+
+      return response;
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      setUser(null);
+      setIsAuthenticated(false);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('access');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('user');
+      navigate('/', { replace: true });
+      throw error;
+    }
+  }, [navigate]);
+
   // Initialize auth state on app load
   useEffect(() => {
     initializeAuth();
@@ -47,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
       return () => clearInterval(refreshInterval);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, refreshToken]);
 
   const initializeAuth = async () => {
     try {
@@ -127,31 +150,6 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setIsAuthenticated(false);
       navigate('/', { replace: true });
-    }
-  };
-
-  const refreshToken = async () => {
-    try {
-      const response = await refreshTokenAPI();
-      
-      // Update user if needed
-      if (response.user) {
-        setUser(response.user);
-        localStorage.setItem('user', JSON.stringify(response.user));
-      }
-      
-      return response;
-    } catch (error) {
-      console.error('Token refresh failed:', error);
-      // If refresh fails, clear auth state without calling logout API
-      setUser(null);
-      setIsAuthenticated(false);
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('access');
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('user');
-      navigate('/', { replace: true });
-      throw error;
     }
   };
 
