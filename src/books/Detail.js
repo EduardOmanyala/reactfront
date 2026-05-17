@@ -1,7 +1,7 @@
 
 
 import { Helmet } from "react-helmet";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { authFetch } from "../api/auth";
@@ -19,6 +19,22 @@ const Detail = () => {
   const [book, setBook] = useState(null);
   const [hasPurchased, setHasPurchased] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
+  const [downloadBusy, setDownloadBusy] = useState(false);
+  const buyReleaseTimerRef = useRef(null);
+  const downloadReleaseTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (buyReleaseTimerRef.current) {
+        clearTimeout(buyReleaseTimerRef.current);
+        buyReleaseTimerRef.current = null;
+      }
+      if (downloadReleaseTimerRef.current) {
+        clearTimeout(downloadReleaseTimerRef.current);
+        downloadReleaseTimerRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // Fetch single book
@@ -81,14 +97,21 @@ const Detail = () => {
       return;
     }
 
+    setIsPaying(true);
+    if (buyReleaseTimerRef.current) {
+      clearTimeout(buyReleaseTimerRef.current);
+    }
+    buyReleaseTimerRef.current = setTimeout(() => {
+      setIsPaying(false);
+      buyReleaseTimerRef.current = null;
+    }, 6000);
+
     if (!window.FlutterwaveCheckout) {
       console.error("Flutterwave script is not loaded.");
       return;
     }
 
     try {
-      setIsPaying(true);
-
       const userResponse = await authFetch(`${BASE_URL}/api/user/`, {
         method: "GET",
         headers: {
@@ -137,57 +160,63 @@ const Detail = () => {
       });
     } catch (err) {
       console.error("Payment initialization error:", err);
-    } finally {
-      setIsPaying(false);
     }
   };
 
-      const handleDownload = async () => {
-      try {
-        const response = await authFetch(
-          `${BASE_URL}/books/download/${book.id}/`,
-          {
-            method: "GET",
-          }
-        );
-
-        if (response.status === 401) {
-          navigate("/login");
-          return;
+  const handleDownload = async () => {
+    try {
+      const response = await authFetch(
+        `${BASE_URL}/books/download/${book.id}/`,
+        {
+          method: "GET",
         }
+      );
 
-        if (!response.ok) {
-          throw new Error("Download failed");
-        }
-
-        const blob = await response.blob();
-
-        // Try to extract filename from response headers
-        let filename = `book_${book.id}`;
-        const disposition = response.headers.get("Content-Disposition");
-
-        if (disposition && disposition.includes("filename=")) {
-          filename = disposition
-            .split("filename=")[1]
-            .replace(/"/g, "");
-        }
-
-        // Create download link
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        window.URL.revokeObjectURL(url);
-      } catch (err) {
-        console.error("Download error:", err);
+      if (response.status === 401) {
+        navigate("/login");
+        return;
       }
-    };
 
+      if (!response.ok) {
+        throw new Error("Download failed");
+      }
+
+      const blob = await response.blob();
+
+      let filename = `book_${book.id}`;
+      const disposition = response.headers.get("Content-Disposition");
+
+      if (disposition && disposition.includes("filename=")) {
+        filename = disposition.split("filename=")[1].replace(/"/g, "");
+      }
+
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download error:", err);
+    }
+  };
+
+  const handleDownloadClick = () => {
+    if (downloadBusy) return;
+    setDownloadBusy(true);
+    if (downloadReleaseTimerRef.current) {
+      clearTimeout(downloadReleaseTimerRef.current);
+    }
+    downloadReleaseTimerRef.current = setTimeout(() => {
+      setDownloadBusy(false);
+      downloadReleaseTimerRef.current = null;
+    }, 8000);
+    void handleDownload();
+  };
 
   return (
     <div className="detail-container">
@@ -228,11 +257,12 @@ const Detail = () => {
           {(!isAuthenticated || (isAuthenticated && !hasPurchased)) && (
             <button
               id="buy"
+              type="button"
               className="buy-now"
               onClick={handleBuyClick}
               disabled={isPaying}
             >
-              {isPaying ? "Processing..." : "Buy Now"}
+              {isPaying ? "Processing" : "Buy Now"}
             </button>
           )}
 
@@ -242,11 +272,19 @@ const Detail = () => {
           {isAuthenticated && hasPurchased && (
             <button
               id="down-btn"
+              type="button"
               className="buy-now mt-1"
-              onClick={handleDownload}
+              onClick={handleDownloadClick}
+              disabled={downloadBusy}
+              aria-busy={downloadBusy}
             >
-              Download
-          </button>
+              <span className="download-btn-inner">
+                {downloadBusy && (
+                  <span className="btn-inline-spinner" aria-hidden="true" />
+                )}
+                Download
+              </span>
+            </button>
           )}
         </div>
       </div>

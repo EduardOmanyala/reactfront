@@ -18,6 +18,14 @@ export default function Markets() {
                         <p>The latest news. Rate changes. Estimate returns and compare different providers to find what best for you.</p>
                     </div>
                     </Link>
+
+                    <Link to="/finance/special/funds/" style={{ textDecoration: 'none', color: 'inherit' }} >
+                    <div className="feature-card glass">
+                        <div className="feature-icon">✨</div>
+                        <h3>Special Funds</h3>
+                        <p>The latest news. Rate changes. Estimate returns and compare different providers to find what best for you.</p>
+                    </div>
+                    </Link>
                  
                   
                     

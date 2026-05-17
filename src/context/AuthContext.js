@@ -1,15 +1,28 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import { 
   login as loginAPI,
   register as registerAPI,
   logout as logoutAPI, 
   refreshToken as refreshTokenAPI,
   getUserProfile,
-  isAuthenticated as checkAuth,
+  getAccessToken,
   getCurrentUser,
-  debugTokens
 } from '../api/auth';
+
+const TOKEN_EXPIRY_BUFFER_SEC = 30;
+
+const isTokenNotExpired = (token) => {
+  if (!token) return false;
+  try {
+    const { exp } = jwtDecode(token);
+    if (!exp) return false;
+    return exp > Date.now() / 1000 + TOKEN_EXPIRY_BUFFER_SEC;
+  } catch {
+    return false;
+  }
+};
 
 const AuthContext = createContext();
 
@@ -66,44 +79,101 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
           console.error('Automatic token refresh failed:', error);
         }
-      }, 4 * 60 * 1000); // Must be < Django ACCESS_TOKEN_LIFETIME (5 min in testapp/settings)
+      }, 55 * 60 * 1000); // Must be < Django ACCESS_TOKEN_LIFETIME (5 min in testapp/settings)
 
       return () => clearInterval(refreshInterval);
     }
   }, [isAuthenticated, refreshToken]);
 
-  const initializeAuth = async () => {
-    try {
-      setLoading(true);
-      
-      // Debug token status
-      debugTokens();
-      
-      // Check if user is authenticated
-      const authenticated = checkAuth();
-      setIsAuthenticated(authenticated);
+  const clearStoredAuth = useCallback(() => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user');
+  }, []);
 
-      if (authenticated) {
-        // Get current user from localStorage or fetch from API
-        const currentUser = getCurrentUser();
-        if (currentUser) {
-          setUser(currentUser);
-        } else {
-          // If no user in localStorage, fetch from API
-          try {
-            const userProfile = await getUserProfile();
-            setUser(userProfile);
-            localStorage.setItem('user', JSON.stringify(userProfile));
-          } catch (error) {
-            console.error('Failed to fetch user profile:', error);
-            // If we can't fetch user profile, logout
-            await logout();
-          }
+  const fetchUserProfileInBackground = useCallback(() => {
+    getUserProfile()
+      .then((userProfile) => {
+        setUser(userProfile);
+        localStorage.setItem('user', JSON.stringify(userProfile));
+      })
+      .catch((error) => {
+        console.error('Failed to fetch user profile:', error);
+        setUser(null);
+        setIsAuthenticated(false);
+        clearStoredAuth();
+      });
+  }, [clearStoredAuth]);
+
+  const initializeAuth = async () => {
+    setLoading(true);
+
+    const accessToken = getAccessToken();
+    const refreshTokenValue = localStorage.getItem('refresh_token');
+    const storedUser = getCurrentUser();
+    const accessValid = isTokenNotExpired(accessToken);
+    const refreshValid = isTokenNotExpired(refreshTokenValue);
+
+    try {
+      // Fast path: valid access JWT — unblock UI immediately
+      if (accessValid) {
+        setIsAuthenticated(true);
+        if (storedUser) {
+          setUser(storedUser);
         }
+        setLoading(false);
+        if (!storedUser) {
+          fetchUserProfileInBackground();
+        }
+        return;
       }
+
+      // Access expired but refresh still valid
+      if (refreshValid) {
+        if (storedUser) {
+          setIsAuthenticated(true);
+          setUser(storedUser);
+          setLoading(false);
+          refreshTokenAPI()
+            .then((response) => {
+              if (response.user) {
+                setUser(response.user);
+                localStorage.setItem('user', JSON.stringify(response.user));
+              }
+            })
+            .catch((error) => {
+              console.error('Background token refresh failed:', error);
+              setUser(null);
+              setIsAuthenticated(false);
+              clearStoredAuth();
+              navigate('/', { replace: true });
+            });
+          return;
+        }
+
+        // No cached user — must refresh before we know the session
+        const response = await refreshTokenAPI();
+        setIsAuthenticated(true);
+        if (response.user) {
+          setUser(response.user);
+          localStorage.setItem('user', JSON.stringify(response.user));
+        } else {
+          fetchUserProfileInBackground();
+        }
+        return;
+      }
+
+      if (accessToken || refreshTokenValue) {
+        clearStoredAuth();
+      }
+      setUser(null);
+      setIsAuthenticated(false);
     } catch (error) {
       console.error('Auth initialization error:', error);
-      await logout();
+      clearStoredAuth();
+      setUser(null);
+      setIsAuthenticated(false);
     } finally {
       setLoading(false);
     }

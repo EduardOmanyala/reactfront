@@ -25,6 +25,7 @@ function Redirect() {
             justify-content: center;
             gap: 14px;
             text-align: center;
+            margin-bottom: 20%;
           }
 
           .redirect-spinner {

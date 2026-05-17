@@ -3,26 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 export default function CpaHome() {
-  // const { isAuthenticated, loading } = useAuth();
 
-  // // Show loading spinner while checking authentication
-  // if (loading) {
-  //   return (
-  //     <div className="loading-container">
-  //       <div className="loading-spinner">
-  //         <div className="spinner"></div>
-  //         <p>Loading...</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  // // Redirect authenticated users to dashboard
-  // if (isAuthenticated) {
-  //   return <Navigate to="/dashboard" replace />;
-  // }
-
-  // Show home content only to non-authenticated users
   return (
     <div id="home" className="page active">
         <div className="container">

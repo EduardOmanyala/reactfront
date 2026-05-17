@@ -194,7 +194,7 @@ nav {
 /* Page system */
 .page {
     display: none;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     padding: 40px 20px 20px;
 }
 .page.active {
@@ -316,14 +316,14 @@ button[type="submit"] {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
 }
 
 .features2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    margin-bottom: 40px;
+  
     margin-left: 20%;
     margin-right: 20%;
 }
@@ -332,7 +332,7 @@ button[type="submit"] {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    margin-bottom: 40px;
+   
 }
 
 @media (min-width: 768px) {

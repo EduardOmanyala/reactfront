@@ -1,6 +1,6 @@
 
-const API_BASE_URL = 'https://api.ken-lib.com/api';
-// const API_BASE_URL = 'http://127.0.0.1:8000/api';
+// const API_BASE_URL = 'https://api.ken-lib.com/api';
+const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
 
 /** Access token key used by this app; legacy `access` supported for older screens. */

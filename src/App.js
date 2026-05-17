@@ -28,6 +28,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 // import Dash from './dash/Dash'
 import Ebooks from './books/Ebooks'; 
 import MMFCalculator2 from './mmf/MMFCalculator2';
+import SFCalculator from './mmf/SFCalculator';
 import Markets from './mmf/Markets';
 import Detail from './books/Detail';
 import Download from './books/Download';
@@ -57,10 +58,36 @@ import Reset from './components/Resets/Reset';
 
 function App() {
 
-  const location = useLocation();
-  const noLayoutRoutes = ["/login", "/register"];
+  // const location = useLocation();
+  // const noLayoutRoutes = ["/login", "/register"];
 
-  const hideLayout = noLayoutRoutes.includes(location.pathname);
+  // const hideLayout = noLayoutRoutes.includes(location.pathname);
+  // Routes where header should be hidden
+  const location = useLocation();
+
+    // Routes where HEADER should NOT appear
+    const noHeaderRoutes = [
+      "/login",
+      "/register"
+    ];
+
+    // Routes where FOOTER SHOULD appear
+    const footerRoutes = [
+      "/",
+      "/contact"
+
+    ];
+
+    // Header logic
+    const hideHeader = noHeaderRoutes.includes(location.pathname);
+
+    // Footer logic
+    const showFooter = footerRoutes.includes(location.pathname);
+
+
+
+
+
   const withTitle = (title, element) => (
     <>
       <Helmet>
@@ -76,7 +103,9 @@ function App() {
         <BackgroundShapes />
 
         {/* Show header only if not in noLayoutRoutes */}
-        {!hideLayout && <Header />}
+        {/* {!hideLayout && <Header />} */}
+         {/* Header */}
+        {!hideHeader && <Header />}
 
         <Routes>
           <Route path="/" element={withTitle('Home', <Home />)} /> {/* title: Home  */}
@@ -125,6 +154,7 @@ function App() {
           <Route path="/land-prices-by-county-in-kenya" element={withTitle('Land Prices', <LandPrices />)} /> {/* title: Land Prices  */}
           <Route path="/finance/mmf/kenya" element={withTitle('MMF - Kenya', <MMFCalculator2 />)} /> {/* title: Finance  */}
           <Route path="/finance/" element={withTitle('Finance', <Markets />)} />
+          <Route path="/finance/special/funds/" element={withTitle('Special Funds', <SFCalculator />)} />
        
           <Route path="/posts/:id/:slug" element={<PostDetail />} />
           <Route path="/posts/" element={withTitle('Blog', <PostList />)} />
@@ -132,7 +162,10 @@ function App() {
         </Routes>
 
         {/* Show footer only if not in noLayoutRoutes */}
-        {!hideLayout && <Footer />}
+        {/* {!hideLayout && <Footer />} */}
+         {/* Footer */}
+      {showFooter && <Footer />}
+       
       </div>
     </AuthProvider>
     

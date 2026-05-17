@@ -235,7 +235,7 @@ export default function Header() {
                   </Link>
                   
                   <Link
-                    to="/finance/mmf/kenya"
+                    to="/finance/"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
                     Markets
@@ -374,7 +374,7 @@ export default function Header() {
                     Books
                   </Link>
                   <Link
-                    to="/finance/mmf/kenya"
+                    to="/finance/"
                     className={activePage === "/finance/mmf/kenya" ? "active" : ""}
                   >
                     Markets
@@ -438,7 +438,7 @@ export default function Header() {
             </Link>
             
             <Link
-              to="/finance/mmf/kenya"
+              to="/finance/"
               className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
@@ -485,7 +485,7 @@ export default function Header() {
               Books
             </Link>
             <Link
-              to="/finance/mmf/kenya"
+              to="/finance/"
               className={activePage === "/finance/mmf/kenya" ? "active" : ""}
               onClick={() => setMenuOpen(false)}
             >
