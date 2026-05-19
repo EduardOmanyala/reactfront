@@ -219,6 +219,12 @@ export default function Header() {
                   >
                     Home
                   </Link> */}
+                   <Link
+                    to="/posts/"
+                    className={activePage === "/books" ? "active" : ""}
+                  >
+                    Blog
+                  </Link>
                 
                   <Link
                     to="/books"
@@ -366,6 +372,12 @@ export default function Header() {
                   >
                     Home
                   </Link> */}
+                  <Link
+                    to="/posts/"
+                    className={activePage === "/books" ? "active" : ""}
+                  >
+                    Blog
+                  </Link>
               
                   <Link
                     to="/books"
@@ -428,6 +440,12 @@ export default function Header() {
             >
               Home
             </Link> */}
+            <Link
+                    to="/posts/"
+                    className={activePage === "/books" ? "active" : ""}
+                  >
+                    Blog
+            </Link>
           
             <Link
               to="/books"
@@ -476,6 +494,12 @@ export default function Header() {
             >
               Home
             </Link> */}
+            <Link
+                    to="/posts/"
+                    className={activePage === "/books" ? "active" : ""}
+                  >
+                    Blog
+            </Link>
         
             <Link
               to="/books"

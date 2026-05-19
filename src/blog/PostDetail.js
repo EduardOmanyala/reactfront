@@ -39,6 +39,27 @@ const PostDetail = () => {
         <h2 className="post-title-main">{post.title}</h2>
       </div>
 
+       <section class="article-meta-post">
+        
+     
+        <div class="red-bar-post"></div>
+
+      
+        <div class="timestamp-post">
+            <span>10 HR AGO</span>
+         
+        </div>
+
+     
+        <div class="authors-post">
+            By Chris Lau, Rae Wang
+        </div>
+
+    </section>
+
+
+
+
       {/* Main Image */}
       {post.mainImage && (
         <div className="image-wrapper">

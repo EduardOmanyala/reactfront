@@ -12,9 +12,9 @@ export default function Footer() {
                         <a href="https://www.youtube.com/">XML Sitemap</a>
                         <a href="https://www.youtube.com/" onclick="showPage('contact')">Contact</a>
                     </div>
-                    <div class="copyright">
-                        &copy; 2025 Glossy Touch. All rights reserved. Crafted with modern web technologies. 
-                        Provided by 
+                    <div className="copyright">
+                        &copy; {new Date().getFullYear()} Ken-Lib. All rights reserved.
+                        {" "}
                     </div>
                 </div>
             </footer>
