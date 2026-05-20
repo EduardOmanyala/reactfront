@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import "./BookBanner.css";
 
 
- const ids = [11, 10]; // hardcoded PKs
+ const ids = [11]; // hardcoded PKs
 
 
 const BookBanner = () => {
@@ -55,7 +55,8 @@ const BookBanner = () => {
 
         <p className="authors-bkbanner">
           by{" "}
-          <a className="author-link-bkbanner" href="https://www.youtube.com/">{book.author}</a> (Author),{" "}
+          <Link className="author-link-bkbanner" to={`/books/${book.id}/${book.slug}`}>{book.author}</Link> (Author),{" "}
+          {/* <a className="author-link-bkbanner" href="https://www.youtube.com/">{book.author}</a> (Author),{" "} */}
           {/* <a className="author-link-bkbanner" href="https://www.youtube.com/">Sawyer Robbins</a> (Author) */}
           &nbsp;&nbsp;|&nbsp;&nbsp;
           <span className="format-label-bkbanner">Format: <strong>E-Book</strong></span>
@@ -63,7 +64,8 @@ const BookBanner = () => {
 
         <div className="ratings-row-bkbanner">
           <span className="stars-bkbanner">★★★★</span>
-          <a className="rating-count-bkbanner" href="https://www.youtube.com/">42,440</a>
+          <Link className="rating-count-bkbanner" to={`/books/${book.id}/${book.slug}`}>42,440</Link>
+          {/* <a className="rating-count-bkbanner" href="https://www.youtube.com/">42,440</a> */}
           <span className="goodreads-bkbanner">4.0 &nbsp;1,509 ratings</span>
         </div>
 
@@ -73,35 +75,9 @@ const BookBanner = () => {
           />
    
 
-        {/* <div className="charts-row-bkbanner">
-          <span className="charts-badge-bkbanner">Amazon Charts</span>
-          <a className="charts-rank-bkbanner" href="https://www.youtube.com/">#2 this week</a>
-        </div> */}
-
-        {/* <div className="accolades-bkbanner">
-          <p className="accolade-bkbanner">Over 10 Million Copies Sold!</p>
-          <p className="accolade-bkbanner">#1 <span>New York Times</span> Bestseller</p>
-          <p className="accolade-bkbanner">#1 <span>Sunday Times</span> Bestseller</p>
-          <p className="accolade-bkbanner">#1 Amazon Bestseller</p>
-          <p className="accolade-bkbanner">#1 Audible Bestseller</p>
-        </div> */}
-
-        {/* <p className="description-title-bkbanner">
-          A Life-Changing Tool Millions of People Can't Stop Talking About
-        </p>
-
-        <p className="description-text-bkbanner">
-          What if the key to happiness, success, and love was as simple as two words?
-        </p>
-
-        <p className="description-text-bkbanner">
-          If you've ever felt stuck, overwhelmed, or frustrated with where you are, the problem isn't
-          you. The problem is the power you give to other people. Two simple words—<em>Let Them</em>—will
-          set you free. Free from the opinions, drama, and judgments of others. Free from the exhausting
-          cycle of trying to manage everything and everyone...
-        </p> */}
-
-        <a className="read-more-bkbanner" href="https://www.youtube.com/">▾ Read more</a>
+       
+        <Link className="read-more-bkbanner" to={`/books/${book.id}/${book.slug}`}>▾ Read more</Link>
+       
       </div>
 
       {/* ── Column 3: Action Buttons (top-aligned) ── */}
