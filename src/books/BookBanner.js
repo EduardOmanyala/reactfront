@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import "./BookBanner.css";
 
 
- const ids = [1, 2]; // hardcoded PKs
+ const ids = [11, 10]; // hardcoded PKs
 
 
 const BookBanner = () => {

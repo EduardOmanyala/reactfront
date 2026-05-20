@@ -45,15 +45,15 @@ const PostDetail = () => {
         <div class="red-bar-post"></div>
 
       
-        <div class="timestamp-post">
+        {/* <div class="timestamp-post">
             <span>10 HR AGO</span>
          
-        </div>
+        </div> */}
 
      
-        <div class="authors-post">
+        {/* <div class="authors-post">
             By Chris Lau, Rae Wang
-        </div>
+        </div> */}
 
     </section>
 
@@ -83,6 +83,7 @@ const PostDetail = () => {
               {/* HTML Content */}
               {item.content && (
                 <div
+                className="post-content"
                   dangerouslySetInnerHTML={{
                     __html: item.content,
                   }}
@@ -102,6 +103,7 @@ const PostDetail = () => {
               )}
             </React.Fragment>
           ))}
+          <div className="post-ad"></div>
         </div>
 
         <div></div>

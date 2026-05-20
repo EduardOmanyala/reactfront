@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MMFRateChart from "./MMFRateChart";
 // import { Link } from "react-router-dom";
-// import BookBanner from "../books/BookBanner";
+import BookBanner from "../books/BookBanner";
 import "./calculator.css";
 
 
@@ -267,9 +267,9 @@ return (
       </div>
     </div>
 
-    {/* <div>
+    <div>
       <BookBanner />
-    </div> */}
+    </div>
 
      {/* Ad section */}
      {/* <div className="mainbanner">
