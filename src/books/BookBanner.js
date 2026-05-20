@@ -69,7 +69,7 @@ const BookBanner = () => {
 
         <div
             
-            dangerouslySetInnerHTML={{ __html: book.info }}
+            dangerouslySetInnerHTML={{ __html: book.adinfo }}
           />
    
 
