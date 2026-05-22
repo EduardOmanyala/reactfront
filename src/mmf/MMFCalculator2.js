@@ -6,41 +6,41 @@ import "./calculator.css";
 
 
 
+
 const MMF_PROVIDERS = {
-  NDVU: { name: "Ndovu Wealth Limited", rate: 10.5 },
-  ARVC: { name: "ArvoCap Asset Managers Limited", rate: 10.7 },
-  LFCB: { name: "Lofty-Corban Investments Limited", rate: 10.6 },
-  KCBM: { name: "KCB Asset Management Limited", rate: 9.0 },
-  ETCA: { name: "Etica Capital Limited", rate: 11.8 },
-  GNFA: { name: "GenAfrica Asset Managers", rate: 9.5 },
-  STNB: { name: "Stanbic Unit Trust Funds", rate: 4.5 },
-  NABC: { name: "Nabo Capital Limited", rate: 12.9 },
-  FAUL: { name: "Faulu Microfinance Bank Limited", rate: 10.2 },
-  KZAM: { name: "Kuza Asset Management Limited", rate: 10.2 },
-  CYTN: { name: "Cytonn Asset Managers Limited", rate: 11.2 },
-  JBLE: { name: "Jubilee Financial Services Limited", rate: 10.7 },
-  MALI: { name: "Mali Money Market Fund (Safaricom)", rate: 8.0 },
-  ENWL: { name: "Enwealth Financial Services", rate: 10.7 },
-  DRYA: { name: "Dry Associates", rate: 9.4 },
-  SNLM: { name: "Sanlam Investments East Africa", rate: 9.3 },
-  GHIM: { name: "GenCap Hela Imara (Genghis Capital)", rate: 8.8 },
+  NDVU: { name: "Ndovu Wealth Limited", rate: 10.5 },          // ~10.48% early May
+  ARVC: { name: "ArvoCap Asset Managers Limited", rate: 11.0 }, // ~11.03%
+  LFCB: { name: "Lofty-Corban Investments Limited", rate: 10.7 }, // ~10.65%
+  KCBM: { name: "KCB Asset Management Limited", rate: 9.0 },   // Stable/lower tier
+  ETCA: { name: "Etica Capital Limited", rate: 12.1 },         // ~12.05%
+  GNFA: { name: "GenAfrica Asset Managers", rate: 9.5 },       // Mid-tier
+  STNB: { name: "Stanbic Unit Trust Funds", rate: 5.0 },       // Lower end
+  NABC: { name: "Nabo Capital Limited", rate: 12.1 },          // ~12.08%
+  FAUL: { name: "Faulu Microfinance Bank Limited", rate: 10.0 }, // Competitive
+  KZAM: { name: "Kuza Asset Management Limited", rate: 10.3 }, // ~10.30%
+  CYTN: { name: "Cytonn Asset Managers Limited", rate: 12.1 }, // ~12.13% (often leads)
+  JBLE: { name: "Jubilee Financial Services Limited", rate: 10.5 }, // ~10.53%
+  MALI: { name: "Mali Money Market Fund (Safaricom)", rate: 8.0 }, // Lower
+  ENWL: { name: "Enwealth Financial Services", rate: 10.7 },   // ~10.66%
+  DRYA: { name: "Dry Associates", rate: 9.4 },                 // Mid/lower
+  SNLM: { name: "Sanlam Investments East Africa", rate: 9.0 }, // Mid-tier
+  GHIM: { name: "GenCap Hela Imara (Genghis Capital)", rate: 8.8 }, // Lower-mid
   APOL: { name: "Apollo Asset Management Company", rate: 8.5 },
-  ABSH: { name: "Absa Shilling Money Market Fund", rate: 7.3 },
-  OMUT: { name: "Old Mutual Unit Trust Scheme", rate: 10.1 },
-  GLFC: { name: "GulfCap Investment Bank", rate: 10.8 },
-  ORTK: { name: "Orient Kasha Money Market Fund", rate: 10.4 },
-  ZIDI: { name: "Ziidi Collective Investment Scheme", rate: 6.0 },
-  CICM: { name: "CIC Asset Managers Limited", rate: 8.4 },
+  ABSH: { name: "Absa Shilling Money Market Fund", rate: 7.5 }, // Lower
+  OMUT: { name: "Old Mutual Unit Trust Scheme", rate: 9.5 },   // Mid
+  GLFC: { name: "GulfCap Investment Bank", rate: 10.8 },       // ~10.82%
+  ORTK: { name: "Orient Kasha Money Market Fund", rate: 10.0 }, // Mid
+  ZIDI: { name: "Ziidi Collective Investment Scheme", rate: 6.5 }, // Lower
+  CICM: { name: "CIC Asset Managers Limited", rate: 8.5 },
   COOP: { name: "Co-op Trust Investment Services", rate: 8.2 },
   IELA: { name: "ICEA Lion Asset Management", rate: 8.3 },
   BRTM: { name: "Britam Asset Managers (Kenya) Limited", rate: 9.5 },
   IMCP: { name: "I&M Capital Limited", rate: 9.2 },
-  MYFR: { name: "Mayfair Asset Managers Limited", rate: 6.9 },
-  ALAK: { name: "African Alliance Kenya Asset Management", rate: 5.9 },
-  MDSN: { name: "Madison Investment Managers Limited", rate: 10.3 },
-  EQIB: { name: "Equity Investment Bank Money Market Fund", rate: 4 }  // Not listed in the latest April 13 update (may have changed or be less actively tracked)
+  MYFR: { name: "Mayfair Asset Managers Limited", rate: 7.5 }, // Can vary (some fixed income higher)
+  ALAK: { name: "African Alliance Kenya Asset Management", rate: 6.0 }, // Lower
+  MDSN: { name: "Madison Investment Managers Limited", rate: 10.0 },
+  EQIB: { name: "Equity Investment Bank Money Market Fund", rate: 5.0 }  // Often lower
 };
-
 
 
 
