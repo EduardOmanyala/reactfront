@@ -7,7 +7,9 @@ import BackgroundShapes from './components/BackgroundShapes';
 import Header from './components/Header';
 import Home from './components/Home';
 import Dash from './components/Dash';
-// import About from './components/About';
+import About from './components/About';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 import Contact from './components/Contact';
 import Questions from './components/questions/Qlist';
 import QuestionsBank from './components/cpa/CpaTest';
@@ -48,6 +50,7 @@ import PostList from './blog/PostList';
 
 import CpaHome from './components/cpa/CpaHome';
 import LevelUnits from './components/cpa/LevelUnits';
+import GetAccess from './components/cpa/GetAccess';
 import UnitDetail from './components/cpa/Units';
 import CpaQuestions from './components/cpa/CpaTest';
 import ResetRequest from './components/Resets/Request';
@@ -74,7 +77,10 @@ function App() {
     // Routes where FOOTER SHOULD appear
     const footerRoutes = [
       "/",
-      "/contact"
+      "/contact",
+      "/about-us",
+      "/privacy-policy",
+      "/terms-of-service"
 
     ];
 
@@ -114,7 +120,9 @@ function App() {
           <Route path="/questions" element={withTitle('Questions', <Questions />)} /> {/* title: Questions  */}
           <Route path="/questions-bank" element={withTitle('Question Bank', <QuestionsBank />)} /> {/* title: Question Bank  */}
           <Route path="/random-questions" element={withTitle('Random Questions', <Random />)} /> {/* title: Random Questions  */}
-          {/* <Route path="/services" element={<Services />} /> */}
+          <Route path="/about-us" element={withTitle('About Us',<About />)} /> 
+          <Route path="/terms-of-service" element={withTitle('Terms of Service',<TermsOfService />)} /> 
+          <Route path="/privacy-policy" element={withTitle('Privacy-Policy', <PrivacyPolicy />)} />
           <Route path="/myquiz" element={withTitle('Quiz', <Quiz />)} /> {/* title: Quiz  */}
           {/* <Route path="/contact" element={<Contact />} /> */}
           <Route path="/quiz" element={withTitle('Quiz', <QuizComponent />)} /> {/* title: Quiz  */}
@@ -125,6 +133,7 @@ function App() {
           <Route path="/level/:level" element={withTitle('CPA Level Units', <LevelUnits />)} /> {/* title: CPA Level Units  */}
           <Route path="/level/:level/:unitSlug" element={withTitle('CPA Level Units', <UnitDetail />)} /> {/* title: CPA Level Units  */}
           <Route path="/study" element={withTitle('Study', <Study />)} /> {/* title: Study  */}
+          <Route path="/getaccess" element={withTitle('Study', <GetAccess />)} /> {/* title: Study  */}
 
 
            <Route path="/contact" element={withTitle('Contact', <Contact />)} /> 
@@ -140,10 +149,7 @@ function App() {
           <Route path="/password-reset" element={withTitle('Kenlib - Password Reset', <ResetRequest />)} /> {/* title: Home  */}
           <Route path="/password-reset/:uidb64/:token" element={withTitle('Kenlib - Create New Password', <Reset />)} /> {/* title: Home  */}
       
-          
-      
-   
-         
+                   
           <Route path="/books" element={withTitle('Books', <Ebooks />)} />  {/* title: books  */}
           {/* <Route path="/books/:slug" element={<Detail />} /> */}
           <Route path="/books/:id/:slug" element={<Detail />} />  {/* title: book.title   */}

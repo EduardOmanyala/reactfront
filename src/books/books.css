@@ -102,6 +102,46 @@
 }
 
 
+.t-color {
+  line-height: 1.5;
+ 
+  
+
+  
+}
+
+/* Paragraph spacing */
+.t-color p {
+  margin-bottom: 16px;
+}
+
+/* Headings */
+.t-color h1,
+.t-color h2,
+.t-color h3,
+.t-color h4 {
+  line-height: 1.4;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Lists */
+
+
+/* Images */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* Links */
+.t-color a {
+  color: #0066cc;
+  text-decoration: underline;
+}
+
 
 .book-price {
   font-size: 16px;

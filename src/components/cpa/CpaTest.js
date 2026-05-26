@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import '../questions/Questions.css';
 import BASE_URL from "../../Config";
+// import GetAccess from "./GetAccess"
 
 const CpaQuestions = () => {
   const { paperId } = useParams();
@@ -185,7 +186,10 @@ const CpaQuestions = () => {
                         q.answer || "<p>No answer provided.</p>"
                       )}
                     />
+                  
                   </div>
+                  
+                  
                 ))}
               </div>
             )}
