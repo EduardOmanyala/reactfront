@@ -2,12 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import '../questions/Questions.css';
 import BASE_URL from "../../Config";
-// import GetAccess from "./GetAccess"
+import GetAccess from "./GetAccess"
+import { useAuth } from "../../context/AuthContext";
+import { authFetch } from "../../api/auth";
 
 const CpaQuestions = () => {
   const { paperId } = useParams();
+  const { isAuthenticated } = useAuth();
 
   const [questions, setQuestions] = useState([]);
+  const [hasPurchased, setHasPurchased] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [expandedPane, setExpandedPane] = useState(null); // 'questions' | 'answers' | null
@@ -74,9 +78,47 @@ const CpaQuestions = () => {
     }
   }, [questions]);
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setHasPurchased(false);
+      return;
+    }
+
+    const checkSubscription = async () => {
+      try {
+        const response = await authFetch(`${BASE_URL}/has-subscription/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.status === 401) {
+          setHasPurchased(false);
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Failed to check subscription status");
+        }
+
+        const data = await response.json();
+        setHasPurchased(Boolean(data?.has_purchased));
+      } catch (err) {
+        console.error("Error checking subscription:", err);
+        setHasPurchased(false);
+      }
+    };
+
+    checkSubscription();
+  }, [isAuthenticated]);
+
   const renderHTML = (htmlString) => {
     return { __html: htmlString };
   };
+
+  const shouldShowAllAnswers = isAuthenticated && hasPurchased;
+  const answersToShow = shouldShowAllAnswers ? questions : questions.slice(0, 1);
 
   return (
     <div className="questions-container">
@@ -173,8 +215,9 @@ const CpaQuestions = () => {
             )}
 
             {!loading && !error && questions.length > 0 && (
+              
               <div className="questions-list">
-                {questions.map((q, index) => (
+                {answersToShow.map((q, index) => (
                   <div key={q.id} className="question-item">
                     <div className="question-header">
                       <span className="question-number">A{index + 1}</span>
@@ -191,6 +234,7 @@ const CpaQuestions = () => {
                   
                   
                 ))}
+                {!shouldShowAllAnswers && <GetAccess />}
               </div>
             )}
           </div>

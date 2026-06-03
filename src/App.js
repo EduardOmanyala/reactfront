@@ -55,6 +55,7 @@ import UnitDetail from './components/cpa/Units';
 import CpaQuestions from './components/cpa/CpaTest';
 import ResetRequest from './components/Resets/Request';
 import Reset from './components/Resets/Reset';
+import PaymentRedirect from './components/cpa/PaymentRedirect';
 
 
 
@@ -134,6 +135,7 @@ function App() {
           <Route path="/level/:level/:unitSlug" element={withTitle('CPA Level Units', <UnitDetail />)} /> {/* title: CPA Level Units  */}
           <Route path="/study" element={withTitle('Study', <Study />)} /> {/* title: Study  */}
           <Route path="/getaccess" element={withTitle('Study', <GetAccess />)} /> {/* title: Study  */}
+          <Route path="/cpa/payment-redirect/:id/" element={withTitle('Redirecting...', <PaymentRedirect />)} /> {/* title: Study  */}
 
 
            <Route path="/contact" element={withTitle('Contact', <Contact />)} /> 

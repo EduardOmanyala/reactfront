@@ -70,7 +70,7 @@ export default function Home() {
                     </Link>
                     
                     
-                   <Link to="/land-prices-by-county-in-kenya" style={{ textDecoration: 'none', color: 'inherit' }} >
+                   <Link to="/posts" style={{ textDecoration: 'none', color: 'inherit' }} >
                     <div className="feature-card glass">
                         <div className="feature-icon">🔒</div>
                         <h3>Blog</h3>

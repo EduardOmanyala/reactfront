@@ -74,24 +74,24 @@ const GetAccess = () => {
         throw new Error("Missing user id or email");
       }
 
-      const bookResponse = await fetch(`${BASE_URL}/books/${BOOK_ID}/`);
-      if (!bookResponse.ok) {
-        throw new Error("Failed to fetch book details");
-      }
-      const bookData = await bookResponse.json();
-      const slug = bookData?.slug;
-      if (!slug) {
-        throw new Error("Missing book slug");
-      }
+    //   const bookResponse = await fetch(`${BASE_URL}/books/${BOOK_ID}/`);
+    //   if (!bookResponse.ok) {
+    //     throw new Error("Failed to fetch book details");
+    //   }
+    //   const bookData = await bookResponse.json();
+    //   const slug = bookData?.slug;
+    //   if (!slug) {
+    //     throw new Error("Missing book slug");
+    //   }
 
-      const txRef = `book-12-${userId}-${(window.crypto?.randomUUID?.() || Date.now())}`;
+      const txRef = `subs-${userId}-${(window.crypto?.randomUUID?.() || Date.now())}`;
 
       window.FlutterwaveCheckout({
         public_key: "FLWPUBK-b36c7e6de3c449c08baf5c9e597ae288-X",
         tx_ref: txRef,
         amount,
         currency: "KES",
-        redirect_url: `https://ken-lib.com/books/payment-confirm/${BOOK_ID}/${slug}/`,
+        redirect_url: `https://ken-lib.com/cpa/payment-redirect/${userId}/`,
         meta: {
           book_id: BOOK_ID,
           user_id: userId,

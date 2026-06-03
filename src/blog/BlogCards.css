@@ -223,6 +223,11 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2%;
+  
+}
+
+.post-image-main {
+  max-width: 60%;
 }
 
 .card-link-blogpage {

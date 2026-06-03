@@ -4,7 +4,6 @@ import "./BlogCards.css";
 import BASE_URL from '../Config';
 
 
-
 const PostDetail = () => {
   const { id, slug } = useParams();
 
