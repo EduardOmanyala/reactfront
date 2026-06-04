@@ -1,6 +1,7 @@
 // src/components/Home.js
 import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import PostList from "../blog/PostList";
 
 export default function Home() {
   const { isAuthenticated, loading } = useAuth();
@@ -27,6 +28,14 @@ export default function Home() {
     <div id="home" className="page active">
         <div className="container">
             <div className="content-wrapper">
+
+                
+                <div>
+                <PostList />
+                </div>
+
+
+
                 <section className="hero glass">
                     <div className="hero-image">
                         <img src="images/templatemo-futuristic-girl.jpg" alt="Modern Technology Interaction" />
